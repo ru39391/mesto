@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto Russia</title>
+  <link rel="stylesheet" href="pages/index.css">
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <img class="header__logo" src="images/header/header__logo.svg" alt="" />
+    </header>
+
+    <main class="content">
+      <section class="profile">
+        <div class="profile__aside">
+          <img class="profile__avatar" src="images/profile/profile__avatar.png" alt="" />
+          <div class="profile__info">
+            <div class="profile__info-heading">
+              <h1>Жак-Ив Кусто</h1>
+              <button class="profile__edit-button" type="button">
+                <img src="images/profile/profile__edit-button.svg" alt="" />
+              </button>
+            </div>
+            <p>Исследователь океана</p>
+          </div>
+        </div>
+        <button class="profile__add-button" type="button">
+          <img src="images/profile/profile__add-button.svg" alt="" />
+        </button>
+      </section>
+
+      <section class="elements">
+        <article class="photo-wrap">
+          <div class="photo-wrap__photo-holder">
+            <img class="photo-wrap__picture" src="images/elements/1.jpg" alt="" />
+          </div>
+          <div class="photo-wrap__info">
+            <h2>Карачаевск</h2>
+            <button class="profile__like-button" type="button">
+              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="" />
+            </button>
+          </div>
+        </article>
+        <article class="photo-wrap">
+          <div class="photo-wrap__photo-holder">
+            <img class="photo-wrap__picture" src="images/elements/2.jpg" alt="" />
+          </div>
+          <div class="photo-wrap__info">
+            <h2>Гора Эльбрус</h2>
+            <button class="profile__like-button" type="button">
+              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="" />
+            </button>
+          </div>
+        </article>
+        <article class="photo-wrap">
+          <div class="photo-wrap__photo-holder">
+            <img class="photo-wrap__picture" src="images/elements/3.jpg" alt="" />
+          </div>
+          <div class="photo-wrap__info">
+            <h2>Домбай</h2>
+            <button class="profile__like-button" type="button">
+              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="" />
+            </button>
+          </div>
+        </article>
+        <article class="photo-wrap">
+          <div class="photo-wrap__photo-holder">
+            <img class="photo-wrap__picture" src="images/elements/2.jpg" alt="" />
+          </div>
+          <div class="photo-wrap__info">
+            <h2>Гора Эльбрус</h2>
+            <button class="profile__like-button" type="button">
+              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="" />
+            </button>
+          </div>
+        </article>
+        <article class="photo-wrap">
+          <div class="photo-wrap__photo-holder">
+            <img class="photo-wrap__picture" src="images/elements/3.jpg" alt="" />
+          </div>
+          <div class="photo-wrap__info">
+            <h2>Домбай</h2>
+            <button class="profile__like-button" type="button">
+              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="" />
+            </button>
+          </div>
+        </article>
+        <article class="photo-wrap">
+          <div class="photo-wrap__photo-holder">
+            <img class="photo-wrap__picture" src="images/elements/1.jpg" alt="" />
+          </div>
+          <div class="photo-wrap__info">
+            <h2>Карачаево-Черкессия</h2>
+            <button class="profile__like-button" type="button">
+              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="" />
+            </button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    </footer>
+  </div>
+
+  <section class="modal">
+    <div class="modal__content">
+      <button class="modal__close" type="button">
+        <img src="images/modal/modal__close.svg" alt="" />
+      </button>
+      <h2>Редактировать профиль</h2>
+
+      <form class="form" action="#">
+        <fieldset class="form__body">
+          <input class="form__field" type="text" value="">
+          <input class="form__field" type="text" value="">
+        </fieldset>
+        <button class="form__button" type="button">Сохранить</button>
+      </form>
+    </div>
+  </section>
+</body>
+</html>

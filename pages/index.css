@@ -1,0 +1,32 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts.css);
+@import url(../blocks/page/page.css);
+
+/* header */
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+
+/* profile */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__aside/profile__aside.css);
+@import url(../blocks/profile/__add-button/profile__add-button.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__info/profile__info.css);
+@import url(../blocks/profile/__info-heading/profile__info-heading.css);
+@import url(../blocks/profile/__title/profile__title.css);
+@import url(../blocks/profile/__subtitle/profile__subtitle.css);
+@import url(../blocks/profile/__edit-button/profile__edit-button.css);
+
+/* elements */
+@import url(../blocks/elements/elements.css);
+
+/* photo-wrap */
+@import url(../blocks/photo-wrap/photo-wrap.css);
+@import url(../blocks/photo-wrap/__info/photo-wrap__info.css);
+@import url(../blocks/photo-wrap/__title/photo-wrap__title.css);
+@import url(../blocks/photo-wrap/__like-button/photo-wrap__like-button.css);
+@import url(../blocks/photo-wrap/__photo-holder/photo-wrap__photo-holder.css);
+@import url(../blocks/photo-wrap/__picture/photo-wrap__picture.css);
+
+/* footer */
+@import url(../blocks/footer/footer.css);
