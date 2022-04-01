@@ -1,21 +1,10 @@
 .page {
   color: #fff;
   font-family: 'Inter', Arial, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
   font-weight: normal;
+  padding: 0 16px;
   box-sizing: border-box;
-  background-color: #2A2C2F;
-}
-
-@media (min-width:768px) {
-  .page {
-    padding: 28px 0 24px;
-  }
-}
-
-@media (max-width:767px) {
-  .page {
-    padding: 16px 0 24px;
-  }
+  background-color: #000;
 }

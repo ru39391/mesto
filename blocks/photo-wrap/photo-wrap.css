@@ -1,2 +1,8 @@
-.header {
+.photo-wrap {
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
 }

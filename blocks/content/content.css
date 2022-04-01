@@ -1,7 +1,6 @@
-.footer {
+.content {
   min-width: 320px;
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 0 60px;
+  margin: 0 auto 66px;
   box-sizing: border-box;
 }

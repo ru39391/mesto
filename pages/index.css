@@ -6,6 +6,9 @@
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
 
+/* content */
+@import url(../blocks/content/content.css);
+
 /* profile */
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__aside/profile__aside.css);
@@ -30,3 +33,16 @@
 
 /* footer */
 @import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);
+
+/* modal */
+@import url(../blocks/modal/modal.css);
+@import url(../blocks/modal/__content/modal__content.css);
+@import url(../blocks/modal/__title/modal__title.css);
+@import url(../blocks/modal/__close/modal__close.css);
+
+/* form */
+@import url(../blocks/form/form.css);
+@import url(../blocks/form/__body/form__body.css);
+@import url(../blocks/form/__field/form__field.css);
+@import url(../blocks/form/__button/form__button.css);
