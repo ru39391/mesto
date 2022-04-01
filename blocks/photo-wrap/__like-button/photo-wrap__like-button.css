@@ -8,5 +8,10 @@
   border: 0;
   padding: 0;
   cursor: pointer;
+  transition: all .3s ease;
   background-color: rgba(0, 0, 0, 0);
+}
+
+.photo-wrap__like-button:hover {
+  opacity: .6;
 }

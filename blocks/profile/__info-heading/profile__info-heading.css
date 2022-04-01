@@ -1,5 +1,16 @@
 .profile__info-heading {
   display: flex;
   align-items: center;
-  margin: 0 0 16px;
+}
+
+@media (min-width:576px) {
+  .profile__info-heading {
+    margin: 0 0 16px;
+  }
+}
+
+@media (max-width:575px) {
+  .profile__info-heading {
+    margin: 0 0 14px;
+  }
 }

@@ -2,3 +2,15 @@
   display: flex;
   align-items: center;
 }
+
+@media (max-width:767px) {
+  .profile__aside {
+    margin: 0 0 36px;
+  }
+}
+
+@media (max-width:575px) {
+  .profile__aside {
+    flex-direction: column;
+  }
+}

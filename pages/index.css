@@ -40,9 +40,9 @@
 @import url(../blocks/modal/__content/modal__content.css);
 @import url(../blocks/modal/__title/modal__title.css);
 @import url(../blocks/modal/__close/modal__close.css);
+@import url(../blocks/modal/__close-icon/modal__close-icon.css);
 
 /* form */
-@import url(../blocks/form/form.css);
 @import url(../blocks/form/__body/form__body.css);
 @import url(../blocks/form/__field/form__field.css);
 @import url(../blocks/form/__button/form__button.css);

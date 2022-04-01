@@ -2,3 +2,9 @@
   margin: 0;
   line-height: 1.2;
 }
+
+@media (max-width:575px) {
+  .profile__subtitle {
+    font-size: 14px;
+  }
+}
