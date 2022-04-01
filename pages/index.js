@@ -3,11 +3,11 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 const editBtn = document.querySelector('.profile__edit-button');
 
 const modal = document.querySelector('.modal');
-const modalCloseBtn = document.querySelector('.modal__close');
+const modalCloseBtn = modal.querySelector('.modal__close');
 
 const profileTitleInput = modal.querySelector('[name="profileTitle"]');
 const profileSubtitleInput = modal.querySelector('[name="profileSubtitle"]');
-const submitBtn = document.querySelector('.form__button');
+const submitBtn = modal.querySelector('.form__button');
 
 function showModalForm() {
   modal.classList.add('modal_visible');
