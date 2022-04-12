@@ -5,9 +5,9 @@ const editBtn = document.querySelector('.profile__edit-button');
 const modal = document.querySelector('.modal');
 const modalCloseBtn = modal.querySelector('.modal__close');
 
-const profileTitleInput = modal.querySelector('[name="profileTitle"]');
-const profileSubtitleInput = modal.querySelector('[name="profileSubtitle"]');
-const submitBtn = modal.querySelector('.form__button');
+const form = modal.querySelector('[name="profileEdit"]');
+const profileTitleInput = form.querySelector('[name="profileTitle"]');
+const profileSubtitleInput = form.querySelector('[name="profileSubtitle"]');
 
 function showModalForm() {
   modal.classList.add('modal_visible');
@@ -21,11 +21,11 @@ function closeModalForm() {
 
 function editModalForm(e) {
   e.preventDefault();
-  closeModalForm();
   profileTitle.textContent = profileTitleInput.value;
   profileSubtitle.textContent = profileSubtitleInput.value;
+  closeModalForm();
 }
 
 editBtn.addEventListener('click', showModalForm);
 modalCloseBtn.addEventListener('click', closeModalForm);
-submitBtn.addEventListener('click', editModalForm);
+form.addEventListener('submit', editModalForm);

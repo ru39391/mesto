@@ -1,5 +1,9 @@
 .profile__title {
+  max-width: 294px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (min-width:576px) {

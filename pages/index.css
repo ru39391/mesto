@@ -37,6 +37,7 @@
 
 /* modal */
 @import url(../blocks/modal/modal.css);
+@import url(../blocks/modal/_visible/modal_visible.css);
 @import url(../blocks/modal/__content/modal__content.css);
 @import url(../blocks/modal/__title/modal__title.css);
 @import url(../blocks/modal/__close/modal__close.css);
