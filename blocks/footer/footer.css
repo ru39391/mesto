@@ -1,8 +1,8 @@
 .footer {
   min-width: 320px;
-  max-width: 880px;
+  max-width: 918px;
+  padding: 0 19px;
   margin: 0 auto;
-  padding: 0 16px;
   box-sizing: border-box;
 }
 
