@@ -31,96 +31,44 @@
         </button>
       </section>
 
-      <section class="elements">
-        <article class="photo-wrap">
-          <div class="photo-wrap__photo-holder">
-            <img class="photo-wrap__picture" src="images/elements/1.jpg" alt="Карачаевск" />
-          </div>
-          <div class="photo-wrap__info">
-            <h2 class="photo-wrap__title">Карачаевск</h2>
-            <button class="photo-wrap__like-button" type="button">
-              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="Добавить в избранное" />
-            </button>
-          </div>
-        </article>
-        <article class="photo-wrap">
-          <div class="photo-wrap__photo-holder">
-            <img class="photo-wrap__picture" src="images/elements/2.jpg" alt="Гора Эльбрус" />
-          </div>
-          <div class="photo-wrap__info">
-            <h2 class="photo-wrap__title">Гора Эльбрус</h2>
-            <button class="photo-wrap__like-button" type="button">
-              <img src="images/photo-wrap/photo-wrap__like-button_active.svg" alt="Добавить в избранное" />
-            </button>
-          </div>
-        </article>
-        <article class="photo-wrap">
-          <div class="photo-wrap__photo-holder">
-            <img class="photo-wrap__picture" src="images/elements/3.jpg" alt="Домбай" />
-          </div>
-          <div class="photo-wrap__info">
-            <h2 class="photo-wrap__title">Домбай</h2>
-            <button class="photo-wrap__like-button" type="button">
-              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="Добавить в избранное" />
-            </button>
-          </div>
-        </article>
-        <article class="photo-wrap">
-          <div class="photo-wrap__photo-holder">
-            <img class="photo-wrap__picture" src="images/elements/2.jpg" alt="Гора Эльбрус" />
-          </div>
-          <div class="photo-wrap__info">
-            <h2 class="photo-wrap__title">Гора Эльбрус</h2>
-            <button class="photo-wrap__like-button" type="button">
-              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="Добавить в избранное" />
-            </button>
-          </div>
-        </article>
-        <article class="photo-wrap">
-          <div class="photo-wrap__photo-holder">
-            <img class="photo-wrap__picture" src="images/elements/3.jpg" alt="Домбай" />
-          </div>
-          <div class="photo-wrap__info">
-            <h2 class="photo-wrap__title">Домбай</h2>
-            <button class="photo-wrap__like-button" type="button">
-              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="Добавить в избранное" />
-            </button>
-          </div>
-        </article>
-        <article class="photo-wrap">
-          <div class="photo-wrap__photo-holder">
-            <img class="photo-wrap__picture" src="images/elements/1.jpg" alt="Карачаево-Черкессия" />
-          </div>
-          <div class="photo-wrap__info">
-            <h2 class="photo-wrap__title">Карачаево-Черкессия</h2>
-            <button class="photo-wrap__like-button" type="button">
-              <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="Добавить в избранное" />
-            </button>
-          </div>
-        </article>
-      </section>
+      <section class="elements"></section>
     </main>
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
 
-    <div class="modal">
-      <div class="modal__content">
-        <button class="modal__close" type="button">
-          <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно" />
-        </button>
-        <h2 class="modal__title">Редактировать профиль</h2>
-  
-        <form class="form" name="profileEdit" action="#">
-          <fieldset class="form__body">
-            <input class="form__field" name="profileTitle" type="text" value="">
-            <input class="form__field" name="profileSubtitle" type="text" value="">
-          </fieldset>
-          <button class="form__button" type="submit">Сохранить</button>
-        </form>
+    <template id="form">    
+      <form class="form" name="" action="#"> <!-- profileEdit -->
+        <fieldset class="form__body"></fieldset>
+        <button class="form__button" type="submit">Сохранить</button>
+      </form>
+    </template>
+
+    <template id="modal">
+      <div class="modal">
+        <div class="modal__content">
+          <button class="modal__close" type="button">
+            <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно" />
+          </button>
+          <h2 class="modal__title"></h2> <!-- Редактировать профиль -->
+        </div>
       </div>
-    </div>
+    </template>
+
+    <template id="card">
+      <article class="photo-wrap">
+        <a class="photo-wrap__photo-holder" href="#">
+          <img class="photo-wrap__picture" src="#" alt="" />
+        </a>
+        <div class="photo-wrap__info">
+          <h2 class="photo-wrap__title"></h2>
+          <button class="photo-wrap__like-button" type="button">
+            <img src="images/photo-wrap/photo-wrap__like-button.svg" alt="Добавить в избранное" />
+          </button>
+        </div>
+      </article>
+    </template>
   </div>
 
   <script src="pages/index.js"></script>
