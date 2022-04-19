@@ -1,3 +1,65 @@
+/* forms */
+const addCardForm = [
+  'addCard',
+  {
+    name: 'name',
+    placeholder: 'Название'
+  },
+  {
+    name: 'value',
+    placeholder: 'Ссылка на картинку'
+  }
+];
+const editProfileForm = [
+  'editProfile',
+  {
+    name: 'editProfileTitle',
+    placeholder: ''
+  },
+  {
+    name: 'editProfileSubtitle',
+    placeholder: ''
+  }
+];
+
+
+const formTpl = document.querySelector('#form').content;
+let formTplEl;
+let formBody;
+const createForm = (formName,...formFields) => {
+  formTplEl = formTpl.querySelector('.form').cloneNode(true);
+  formTplEl.name = formName;
+  formBody = formTplEl.querySelector('.form__body');
+  formFields.forEach(formFieldsEl => {
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.name = formFieldsEl.name;
+    input.placeholder = formFieldsEl.placeholder;
+    input.classList.add('form__field');
+    formBody.append(input);
+  });
+
+  formTplEl.addEventListener('submit', e => {
+    e.preventDefault();
+    switch(formName) {
+      case 'addCard':
+        elements.prepend(addCard(getFormData(e.target).name,getFormData(e.target).value));
+        break;
+    };
+    closeModalForm();
+  });
+  return formTplEl;
+};
+
+const getFormData = (form) => {
+  let formData = {};
+  const formFields = form.querySelectorAll('.form__field');
+  formFields.forEach(formFieldsEl => {
+    formData[`${formFieldsEl.name}`] = formFieldsEl.value;
+  });
+  return formData;
+};
+
 /* cards */
 const initialCards = [
   {
@@ -25,74 +87,62 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+/* show cards on init */
 const elements = document.querySelector('.elements');
 const cardTpl = document.querySelector('#card').content;
 let cardTplEl;
-initialCards.forEach(initialCardsEl => {
+const addCard = (cardName,cardLink) => {
   cardTplEl = cardTpl.querySelector('.photo-wrap').cloneNode(true);
-  cardTplEl.querySelector('.photo-wrap__title').textContent = initialCardsEl.name;
-  cardTplEl.querySelector('.photo-wrap__picture').src = initialCardsEl.link;
-  cardTplEl.querySelector('.photo-wrap__photo-holder').href = initialCardsEl.link;
-  elements.append(cardTplEl);
+  cardTplEl.querySelector('.photo-wrap__title').textContent = cardName;
+  cardTplEl.querySelector('.photo-wrap__picture').src = cardLink;
+  cardTplEl.querySelector('.photo-wrap__photo-holder').href = cardLink;
+  return cardTplEl;
+};
+
+initialCards.forEach(initialCardsEl => {
+  elements.append(addCard(initialCardsEl.name,initialCardsEl.link));
 });
 
-/* add card */
+/* show modals */
 const page = document.querySelector('.page');
-const addCardForm = [
-  'addCard',
-  {
-    name: 'addCardTitle',
-    placeholder: 'Название'
-  },
-  {
-    name: 'addCardSubtitle',
-    placeholder: 'Ссылка на картинку'
-  }
-]
-
-const formTpl = document.querySelector('#form').content;
-let formTplEl;
-function createForm(formName,...formFields) {
-  formTplEl = formTpl.querySelector('.form').cloneNode(true);
-  formTplEl.name = formName;
-  formFields.forEach(formFieldsEl => {
-    let input = document.createElement('input');
-    input.type = 'text';
-    input.name = formFieldsEl.name;
-    input.placeholder = formFieldsEl.placeholder;
-    input.classList.add('form__field');
-    formTplEl.querySelector('.form__body').append(input);
-  });
-}
-
 const modalTpl = document.querySelector('#modal').content;
 let modalTplEl;
 let modalContent;
+let modalCloseBtn;
 function showModalForm(modalTitle,formArr) {
   modalTplEl = modalTpl.querySelector('.modal').cloneNode(true);
   modalTplEl.querySelector('.modal__title').textContent = modalTitle;
   modalContent = modalTplEl.querySelector('.modal__content');
-  createForm(...formArr);
-  modalContent.append(formTplEl);
+  modalCloseBtn = modalTplEl.querySelector('.modal__close');
+  modalContent.append(createForm(...formArr));
   modalTplEl.classList.add('modal_visible');
   page.append(modalTplEl);
+  modalCloseBtn.addEventListener('click', closeModalForm);
+}
+
+function closeModalForm() {
+  const modal = document.querySelector('.modal');
+  modal.remove();
 }
 
 const addBtn = document.querySelector('.profile__add-button');
 addBtn.addEventListener('click', () => {
-  showModalForm('Новое место',addCardForm);
+  showModalForm('Новое место', addCardForm);
 });
 
+const editBtn = document.querySelector('.profile__edit-button');
+editBtn.addEventListener('click', () => {
+  showModalForm('Редактировать профиль', editProfileForm);
+});
 
 /* profile */
 /*
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-const editBtn = document.querySelector('.profile__edit-button');
 
-const modalCloseBtn = modal.querySelector('.modal__close');
 
-const form = modal.querySelector('[name="profileEdit"]');
+const form = modal.querySelector('[name="editProfile"]');
 const profileTitleInput = form.querySelector('[name="profileTitle"]');
 const profileSubtitleInput = form.querySelector('[name="profileSubtitle"]');
 
@@ -102,10 +152,6 @@ function showModalForm() {
   profileSubtitleInput.value = profileSubtitle.textContent;
 }
 
-function closeModalForm() {
-  modal.classList.remove('modal_visible');
-}
-
 function editModalForm(e) {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
@@ -113,7 +159,5 @@ function editModalForm(e) {
   closeModalForm();
 }
 
-editBtn.addEventListener('click', showModalForm);
-modalCloseBtn.addEventListener('click', closeModalForm);
 form.addEventListener('submit', editModalForm);
 */
