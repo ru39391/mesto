@@ -1,5 +1,7 @@
 .modal {
-  display:none;
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -10,6 +12,8 @@
   height: 100%;
   z-index: 1040;
   padding: 16px 19px;
+  pointer-events: none;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, .5);
+  transition: visibility 0s linear, opacity .3s linear .2s;
 }

@@ -1,13 +1,16 @@
 /* forms */
 /* форма добавления карточки, поля */
+const getTextContent = (elem) => document.querySelector(elem).textContent;
 const addCardForm = [
   'addCard',
   {
     name: 'name',
+    value: '',
     placeholder: 'Название'
   },
   {
     name: 'value',
+    value: '',
     placeholder: 'Ссылка на картинку'
   }
 ];
@@ -15,11 +18,13 @@ const addCardForm = [
 const editProfileForm = [
   'editProfile',
   {
-    name: 'editProfileTitle',
+    name: 'profile__title',
+    value: getTextContent('.profile__title'),
     placeholder: ''
   },
   {
-    name: 'editProfileSubtitle',
+    name: 'profile__subtitle',
+    value: getTextContent('.profile__subtitle'),
     placeholder: ''
   }
 ];
@@ -35,6 +40,7 @@ const createForm = (formName,...formFields) => { /* в качестве аргу
     let input = document.createElement('input');
     input.type = 'text';
     input.name = formFieldsEl.name;
+    input.value = formFieldsEl.value;
     input.placeholder = formFieldsEl.placeholder;
     input.classList.add('form__field');
     formBody.append(input); /* вставляем поля в родительский контейнер */
@@ -49,6 +55,13 @@ const createForm = (formName,...formFields) => { /* в качестве аргу
         if(addCardTitle && addCardLink) {
           elements.prepend(addCard(addCardTitle,addCardLink)); /* addCard создаёт карточку, принимает два аргумента: заголовок и ссылку на изображение */
         }
+        break;
+      case 'editProfile':
+        const formData = getFormData(e.target);
+        Object.keys(formData).forEach((formDataEl, index) => {
+          document.querySelector(`.${formDataEl}`).textContent = formData[`${formDataEl}`];
+          editProfileForm[index + 1].value = formData[`${formDataEl}`];
+        });
         break;
     };
     closeModalForm(); /* закрываем модальное окно */
@@ -102,6 +115,24 @@ const addCard = (cardName,cardLink) => { /* создаём карточку, в�
   cardTplEl.querySelector('.photo-wrap__title').textContent = cardName;
   cardTplEl.querySelector('.photo-wrap__picture').src = cardLink;
   cardTplEl.querySelector('.photo-wrap__photo-holder').href = cardLink;
+
+  /* подменяем иконку при клике на кнопку лайка */
+  cardTplEl.querySelector('.photo-wrap__like-button').addEventListener('click', e => {
+    let likeBtnIcon = e.target.querySelector('.photo-wrap__like-icon');
+    let likeBtnIconSrc = likeBtnIcon.src;
+    if(likeBtnIconSrc.includes('active')) {
+      likeBtnIconSrc = likeBtnIconSrc.replace('button_active.','button.');
+    } else {
+      likeBtnIconSrc = likeBtnIconSrc.replace('button.','button_active.');
+    }
+    likeBtnIcon.src = likeBtnIconSrc;
+  });
+
+  /* удаляем карточку */
+  cardTplEl.querySelector('.photo-wrap__remove-button').addEventListener('click', e => {
+    e.target.closest('.photo-wrap').remove();
+  });
+
   return cardTplEl;
 };
 
@@ -121,14 +152,17 @@ function showModalForm(modalTitle,formArr) { /* showModalForm в качеств�
   modalContent = modalTplEl.querySelector('.modal__content');
   modalCloseBtn = modalTplEl.querySelector('.modal__close');
   modalContent.append(createForm(...formArr)); /* внутри тела окна помещаем форму, созданную при помощи функции createForm */
-  modalTplEl.classList.add('modal_visible');
   page.append(modalTplEl);
+  setTimeout(() => modalTplEl.classList.add('modal_visible'));
   modalCloseBtn.addEventListener('click', closeModalForm);
 }
 
 function closeModalForm() {
   const modal = document.querySelector('.modal');
-  modal.remove();
+  modal.classList.remove('modal_visible');
+  setTimeout(() => {
+    modal.remove();
+  }, 1000);
 }
 
 const addBtn = document.querySelector('.profile__add-button');
@@ -140,29 +174,3 @@ const editBtn = document.querySelector('.profile__edit-button');
 editBtn.addEventListener('click', () => {
   showModalForm('Редактировать профиль', editProfileForm);
 });
-
-/* profile */
-/*
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
-
-
-const form = modal.querySelector('[name="editProfile"]');
-const profileTitleInput = form.querySelector('[name="profileTitle"]');
-const profileSubtitleInput = form.querySelector('[name="profileSubtitle"]');
-
-function showModalForm() {
-  modal.classList.add('modal_visible');
-  profileTitleInput.value = profileTitle.textContent;
-  profileSubtitleInput.value = profileSubtitle.textContent;
-}
-
-function editModalForm(e) {
-  e.preventDefault();
-  profileTitle.textContent = profileTitleInput.value;
-  profileSubtitle.textContent = profileSubtitleInput.value;
-  closeModalForm();
-}
-
-form.addEventListener('submit', editModalForm);
-*/

@@ -1,6 +1,9 @@
-.photo-wrap__like-button {
-  width: 22px;
-  height: 22px;
+.photo-wrap__remove-button {
+  width: 18px;
+  height: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +15,6 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
-.photo-wrap__like-button:hover {
-  opacity: .5;
+.photo-wrap__remove-button:hover {
+  opacity: .6;
 }
