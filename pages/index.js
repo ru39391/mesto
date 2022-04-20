@@ -1,6 +1,6 @@
 /* forms */
-/* форма добавления карточки, поля */
 const getTextContent = (elem) => document.querySelector(elem).textContent;
+/* форма добавления карточки, поля */
 const addCardForm = [
   'addCard',
   {
@@ -35,7 +35,7 @@ let formBody; /* определение переменной для контей
 const createForm = (formName,...formFields) => { /* в качестве аргументов функция createForm принимет данные массива формы (определены выше) */
   formTplEl = formTpl.querySelector('.form').cloneNode(true); /* создаём форму, копируя содержимое соответствующего шаблона */
   formTplEl.name = formName; /* присваиваем атрибуту формы name значение из массива  */
-  formBody = formTplEl.querySelector('.form__body'); /* переопределяем переменную, внося в неё опрделённый блок контейнера полей */
+  formBody = formTplEl.querySelector('.form__body'); /* переопределяем переменную, внося в неё определённый блок контейнера полей */
   formFields.forEach(formFieldsEl => { /* создаём поля ввода, определяем их свойства */
     let input = document.createElement('input');
     input.type = 'text';
@@ -64,7 +64,7 @@ const createForm = (formName,...formFields) => { /* в качестве аргу
         });
         break;
     };
-    closeModalForm(); /* закрываем модальное окно */
+    closeModal(); /* закрываем модальное окно */
   });
   return formTplEl; /* возвращаем форму, она будет использована при создании модального окна */
 };
@@ -116,7 +116,7 @@ const addCard = (cardName,cardLink) => { /* создаём карточку, в�
   cardTplEl.querySelector('.photo-wrap__picture').src = cardLink;
   cardTplEl.querySelector('.photo-wrap__photo-holder').href = cardLink;
 
-  /* подменяем иконку при клике на кнопку лайка */
+  /* меняем иконку при клике на кнопку лайка */
   cardTplEl.querySelector('.photo-wrap__like-button').addEventListener('click', e => {
     let likeBtnIcon = e.target.querySelector('.photo-wrap__like-icon');
     let likeBtnIconSrc = likeBtnIcon.src;
@@ -146,23 +146,48 @@ const modalTpl = document.querySelector('#modal').content; /* содержимо
 let modalTplEl; /* непосредственно модальное окно */
 let modalContent; /* контейнер содержимого для модального окна */
 let modalCloseBtn;
-function showModalForm(modalTitle,formArr) { /* showModalForm в качестве аргументов принимает заголовок модального окна и массив полей формы, которую необходимо в окно поместить */
+function setModal() {
   modalTplEl = modalTpl.querySelector('.modal').cloneNode(true);
-  modalTplEl.querySelector('.modal__title').textContent = modalTitle;
   modalContent = modalTplEl.querySelector('.modal__content');
   modalCloseBtn = modalTplEl.querySelector('.modal__close');
-  modalContent.append(createForm(...formArr)); /* внутри тела окна помещаем форму, созданную при помощи функции createForm */
-  page.append(modalTplEl);
-  setTimeout(() => modalTplEl.classList.add('modal_visible'));
-  modalCloseBtn.addEventListener('click', closeModalForm);
 }
 
-function closeModalForm() {
+function showModal() {
+  page.append(modalTplEl);
+  setTimeout(() => modalTplEl.classList.add('modal_visible'));
+  modalCloseBtn.addEventListener('click', closeModal);
+}
+
+function showModalForm(modalTitle,formArr) { /* showModalForm в качестве аргументов принимает заголовок модального окна и массив полей формы, которую необходимо в окно поместить */
+  setModal();
+  modalTplEl.querySelector('.modal__title').textContent = modalTitle;
+  modalContent.append(createForm(...formArr)); /* внутри тела окна помещаем форму, созданную при помощи функции createForm */
+  showModal();
+}
+
+function closeModal() {
   const modal = document.querySelector('.modal');
   modal.classList.remove('modal_visible');
   setTimeout(() => {
     modal.remove();
   }, 1000);
+}
+
+function revealPhoto(url,desc) {
+  setModal();
+  modalTplEl.classList.add('modal_bg_dark')
+  modalTplEl.querySelector('.modal__title').remove();
+  let img = document.createElement('img');
+  img.src = url;
+  img.alt = desc;
+  img.classList.add('modal__photo');
+  modalContent.append(img);
+  let caption = document.createElement('p');
+  caption.textContent = desc;
+  caption.classList.add('modal__photo-caption');
+  modalContent.append(caption);
+  modalContent.classList.add('modal__content_type_photo-holder');
+  showModal();
 }
 
 const addBtn = document.querySelector('.profile__add-button');
@@ -173,4 +198,13 @@ addBtn.addEventListener('click', () => {
 const editBtn = document.querySelector('.profile__edit-button');
 editBtn.addEventListener('click', () => {
   showModalForm('Редактировать профиль', editProfileForm);
+});
+
+const photoItems = document.querySelectorAll('.photo-wrap__photo-holder');
+photoItems.forEach(photoItemsEl => {
+  photoItemsEl.addEventListener('click', e => {
+    e.preventDefault();
+    const photoItemsElCaption = e.target.closest('.photo-wrap').querySelector('.photo-wrap__title').textContent;
+    revealPhoto(photoItemsEl.href,photoItemsElCaption);
+  });
 });

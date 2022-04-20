@@ -41,8 +41,12 @@
 /* modal */
 @import url(../blocks/modal/modal.css);
 @import url(../blocks/modal/_visible/modal_visible.css);
+@import url(../blocks/modal/_bg_dark/modal_bg_dark.css);
 @import url(../blocks/modal/__content/modal__content.css);
+@import url(../blocks/modal/__content/_type_photo-holder/modal__content_type_photo-holder.css);
 @import url(../blocks/modal/__title/modal__title.css);
+@import url(../blocks/modal/__photo/modal__photo.css);
+@import url(../blocks/modal/__photo-caption/modal__photo-caption.css);
 @import url(../blocks/modal/__close/modal__close.css);
 @import url(../blocks/modal/__close-icon/modal__close-icon.css);
 

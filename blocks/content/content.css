@@ -1,6 +1,8 @@
 .content {
+  width: 100%;
   min-width: 320px;
   max-width: 918px;
+  flex-grow: 1;
   padding: 0 19px;
   margin: 0 auto;
   box-sizing: border-box;

@@ -1,4 +1,7 @@
 .page {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   min-height: 100vh;
   color: #fff;
   font-family: 'Inter', Arial, sans-serif;
