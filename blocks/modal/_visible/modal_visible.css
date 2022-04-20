@@ -2,4 +2,5 @@
   opacity: 1;
   visibility: visible;
   pointer-events: all;
+  background-color: rgba(0, 0, 0, .5);
 }

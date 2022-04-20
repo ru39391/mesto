@@ -29,55 +29,6 @@ const editProfileForm = [
   }
 ];
 
-const formTpl = document.querySelector('#form').content; /* содержимое шаблона формы */
-let formTplEl; /* определение переменной непосредственно для формы */
-let formBody; /* определение переменной для контейнера полей формы */
-const createForm = (formName,...formFields) => { /* в качестве аргументов функция createForm принимет данные массива формы (определены выше) */
-  formTplEl = formTpl.querySelector('.form').cloneNode(true); /* создаём форму, копируя содержимое соответствующего шаблона */
-  formTplEl.name = formName; /* присваиваем атрибуту формы name значение из массива  */
-  formBody = formTplEl.querySelector('.form__body'); /* переопределяем переменную, внося в неё определённый блок контейнера полей */
-  formFields.forEach(formFieldsEl => { /* создаём поля ввода, определяем их свойства */
-    let input = document.createElement('input');
-    input.type = 'text';
-    input.name = formFieldsEl.name;
-    input.value = formFieldsEl.value;
-    input.placeholder = formFieldsEl.placeholder;
-    input.classList.add('form__field');
-    formBody.append(input); /* вставляем поля в родительский контейнер */
-  });
-
-  formTplEl.addEventListener('submit', e => { /* при отправке данных проверяем назначение формы */
-    e.preventDefault();
-    switch(formName) { /* проверяем передаваемое значение атрибута name формы */
-      case 'addCard': /* в случае [name="addCard"] создаём карточку галереи, если оба поля заполнены */
-        const addCardTitle = getFormData(e.target).name;
-        const addCardLink = getFormData(e.target).value; /* getFormData возвращает объект, содержащий введённые значения полей ранее созданной формы, функция принимает в качестве аргумента форму */
-        if(addCardTitle && addCardLink) {
-          elements.prepend(addCard(addCardTitle,addCardLink)); /* addCard создаёт карточку, принимает два аргумента: заголовок и ссылку на изображение */
-        }
-        break;
-      case 'editProfile':
-        const formData = getFormData(e.target);
-        Object.keys(formData).forEach((formDataEl, index) => {
-          document.querySelector(`.${formDataEl}`).textContent = formData[`${formDataEl}`];
-          editProfileForm[index + 1].value = formData[`${formDataEl}`];
-        });
-        break;
-    };
-    closeModal(); /* закрываем модальное окно */
-  });
-  return formTplEl; /* возвращаем форму, она будет использована при создании модального окна */
-};
-
-const getFormData = (form) => {
-  let formData = {}; /* определяем объект */
-  const formFields = form.querySelectorAll('.form__field'); /* получаем поля формы */
-  formFields.forEach(formFieldsEl => {
-    formData[`${formFieldsEl.name}`] = formFieldsEl.value; /* заполняем объект, в качестве ключа используем значение атрибута поля name */
-  });
-  return formData; /* возвращаем заполненный объект, будет использован внутри createForm */
-};
-
 /* cards */
 const initialCards = [
   {
@@ -118,7 +69,7 @@ const addCard = (cardName,cardLink) => { /* создаём карточку, в�
 
   /* меняем иконку при клике на кнопку лайка */
   cardTplEl.querySelector('.photo-wrap__like-button').addEventListener('click', e => {
-    let likeBtnIcon = e.target.querySelector('.photo-wrap__like-icon');
+    const likeBtnIcon = e.target.querySelector('.photo-wrap__like-icon');
     let likeBtnIconSrc = likeBtnIcon.src;
     if(likeBtnIconSrc.includes('active')) {
       likeBtnIconSrc = likeBtnIconSrc.replace('button_active.','button.');
@@ -140,30 +91,18 @@ initialCards.forEach(initialCardsEl => { /* обрабатываем масси�
   elements.append(addCard(initialCardsEl.name,initialCardsEl.link));
 });
 
-/* show modals */
+/* modals */
 const page = document.querySelector('.page'); /* определяем родителя модального окна */
 const modalTpl = document.querySelector('#modal').content; /* содержимое шаблона модального окна */
 let modalTplEl; /* непосредственно модальное окно */
 let modalContent; /* контейнер содержимого для модального окна */
 let modalCloseBtn;
+
 function setModal() {
   modalTplEl = modalTpl.querySelector('.modal').cloneNode(true);
   modalContent = modalTplEl.querySelector('.modal__content');
   modalCloseBtn = modalTplEl.querySelector('.modal__close');
-}
-
-function showModal() {
-  page.append(modalTplEl);
-  setTimeout(() => modalTplEl.classList.add('modal_visible'));
-  modalCloseBtn.addEventListener('click', closeModal);
-}
-
-function showModalForm(modalTitle,formArr) { /* showModalForm в качестве аргументов принимает заголовок модального окна и массив полей формы, которую необходимо в окно поместить */
-  setModal();
-  modalTplEl.querySelector('.modal__title').textContent = modalTitle;
-  modalContent.append(createForm(...formArr)); /* внутри тела окна помещаем форму, созданную при помощи функции createForm */
-  showModal();
-}
+};
 
 function closeModal() {
   const modal = document.querySelector('.modal');
@@ -171,25 +110,89 @@ function closeModal() {
   setTimeout(() => {
     modal.remove();
   }, 1000);
-}
+};
+
+function showModal() {
+  page.append(modalTplEl);
+  setTimeout(() => modalTplEl.classList.add('modal_visible'));
+  modalCloseBtn.addEventListener('click', closeModal);
+};
+
+function showModalForm(modalTitle,formArr) { /* showModalForm в качестве аргументов принимает заголовок модального окна и массив полей формы, которую необходимо в окно поместить */
+  setModal();
+  modalTplEl.querySelector('.modal__title').textContent = modalTitle;
+  modalContent.append(createForm(...formArr)); /* внутри тела окна помещаем форму, созданную при помощи функции createForm */
+  showModal();
+};
 
 function revealPhoto(url,desc) {
   setModal();
   modalTplEl.classList.add('modal_bg_dark')
   modalTplEl.querySelector('.modal__title').remove();
-  let img = document.createElement('img');
+  const img = document.createElement('img');
   img.src = url;
   img.alt = desc;
   img.classList.add('modal__photo');
   modalContent.append(img);
-  let caption = document.createElement('p');
+  const caption = document.createElement('p');
   caption.textContent = desc;
   caption.classList.add('modal__photo-caption');
   modalContent.append(caption);
   modalContent.classList.add('modal__content_type_photo-holder');
   showModal();
-}
+};
 
+/* forms */
+const getFormData = (form) => {
+  let formData = {}; /* определяем объект */
+  const formFields = form.querySelectorAll('.form__field'); /* получаем поля формы */
+  formFields.forEach(formFieldsEl => {
+    formData[`${formFieldsEl.name}`] = formFieldsEl.value; /* заполняем объект, в качестве ключа используем значение атрибута поля name */
+  });
+  return formData; /* возвращаем заполненный объект, будет использован внутри createForm */
+};
+
+const formTpl = document.querySelector('#form').content; /* содержимое шаблона формы */
+let formTplEl; /* определение переменной непосредственно для формы */
+let formBody; /* определение переменной для контейнера полей формы */
+const createForm = (formName,...formFields) => { /* в качестве аргументов функция createForm принимет данные массива формы (определены выше) */
+  formTplEl = formTpl.querySelector('.form').cloneNode(true); /* создаём форму, копируя содержимое соответствующего шаблона */
+  formTplEl.name = formName; /* присваиваем атрибуту формы name значение из массива  */
+  formBody = formTplEl.querySelector('.form__body'); /* переопределяем переменную, внося в неё определённый блок контейнера полей */
+  formFields.forEach(formFieldsEl => { /* создаём поля ввода, определяем их свойства */
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = formFieldsEl.name;
+    input.value = formFieldsEl.value;
+    input.placeholder = formFieldsEl.placeholder;
+    input.classList.add('form__field');
+    formBody.append(input); /* вставляем поля в родительский контейнер */
+  });
+
+  formTplEl.addEventListener('submit', e => { /* при отправке данных проверяем назначение формы */
+    e.preventDefault();
+    switch(formName) { /* проверяем передаваемое значение атрибута name формы */
+      case 'addCard': /* в случае [name="addCard"] создаём карточку галереи, если оба поля заполнены */
+        const addCardTitle = getFormData(e.target).name;
+        const addCardLink = getFormData(e.target).value; /* getFormData возвращает объект, содержащий введённые значения полей ранее созданной формы, функция принимает в качестве аргумента форму */
+        if(addCardTitle && addCardLink) {
+          elements.prepend(addCard(addCardTitle,addCardLink)); /* addCard создаёт карточку, принимает два аргумента: заголовок и ссылку на изображение */
+        }
+        break;
+      case 'editProfile':
+        const formData = getFormData(e.target);
+        Object.keys(formData).forEach((formDataEl, index) => {
+          document.querySelector(`.${formDataEl}`).textContent = formData[`${formDataEl}`];
+          editProfileForm[index + 1].value = formData[`${formDataEl}`];
+        });
+        break;
+    };
+    closeModal(); /* закрываем модальное окно */
+  });
+  return formTplEl; /* возвращаем форму, она будет использована при создании модального окна */
+};
+
+/* btns */
 const addBtn = document.querySelector('.profile__add-button');
 addBtn.addEventListener('click', () => {
   showModalForm('Новое место', addCardForm);
