@@ -38,23 +38,47 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
 
-    <template id="form">
-      <form class="form" name="" action="#">
-        <fieldset class="form__body"></fieldset>
-        <button class="form__button" type="submit">Сохранить</button>
-      </form>
-    </template>
+    <div class="modal modal_target_edit-profile">
+      <div class="modal__content">
+        <button class="modal__close" type="button">
+          <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно" />
+        </button>
+        <h2 class="modal__title">Редактировать профиль</h2>
 
-    <template id="modal">
-      <div class="modal">
-        <div class="modal__content">
-          <button class="modal__close" type="button">
-            <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно" />
-          </button>
-          <h2 class="modal__title"></h2>
-        </div>
+        <form class="form" name="editProfile" action="#">
+          <fieldset class="form__body">
+            <input class="form__field" name="editProfileTitle" type="text" value="">
+            <input class="form__field" name="editProfileSubtitle" type="text" value="">
+          </fieldset>
+          <button class="form__button" type="submit">Сохранить</button>
+        </form>
       </div>
-    </template>
+    </div>
+
+    <div class="modal modal_target_add-card">
+      <div class="modal__content">
+        <button class="modal__close" type="button">
+          <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно" />
+        </button>
+        <h2 class="modal__title">Новое место</h2>
+
+        <form class="form" name="addCard" action="#">
+          <fieldset class="form__body">
+            <input class="form__field" name="addCardTitle" type="text" value="" placeholder="Название">
+            <input class="form__field" name="addCardLink" type="text" value="" placeholder="Ссылка на картинку">
+          </fieldset>
+          <button class="form__button" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal modal_target_reveal-photo modal_bg_dark">
+      <div class="modal__content modal__content_type_photo-holder">
+        <button class="modal__close" type="button">
+          <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно">
+        </button>
+      </div>
+    </div>
 
     <template id="card">
       <article class="photo-wrap">
@@ -74,6 +98,7 @@
     </template>
   </div>
 
+  <script src="pages/initialCards.js"></script>
   <script src="pages/index.js"></script>
 </body>
 </html>

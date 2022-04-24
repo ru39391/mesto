@@ -1,6 +1,5 @@
 .modal {
   opacity: 0;
-  visibility: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,5 +14,5 @@
   pointer-events: none;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0);
-  transition: visibility 0s linear, opacity .3s linear .2s, background-color .4s linear .1s;
+  transition: opacity .3s linear .2s, background-color .4s linear .1s;
 }
