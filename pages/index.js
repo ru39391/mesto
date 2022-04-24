@@ -15,7 +15,6 @@ let cardRemoveBtn;
 let cardLikeBtn;
 
 let modal;
-let modalClassMod;
 const modalCloseBtns = document.querySelectorAll('.modal__close');
 
 let formFieldTitle;
@@ -34,16 +33,11 @@ function hideModal(modal) {
 
 function createModalPhoto(cardTitle,cardLink) {
   modal = document.querySelector('.modal_target_reveal-photo');
-  const modalContent = modal.querySelector('.modal__content');
-  const modalPhoto = document.createElement('img');
+  const modalPhoto = modal.querySelector('.modal__photo');
+  const modalCaption = modal.querySelector('.modal__photo-caption');
   modalPhoto.src = cardLink;
   modalPhoto.alt = cardTitle;
-  modalPhoto.classList.add('modal__photo');
-  modalContent.append(modalPhoto);
-  const modalCaption = document.createElement('p');
   modalCaption.textContent = cardTitle;
-  modalCaption.classList.add('modal__photo-caption');
-  modalContent.append(modalCaption);
   showModal(modal);
 }
 
@@ -104,14 +98,6 @@ modalCloseBtns.forEach(modalCloseBtnsEl => {
   modalCloseBtnsEl.addEventListener('click', e => {
     modal = e.target.closest('.modal');
     hideModal(modal);
-
-    modalClassMod = Boolean(modal.classList.contains('modal_target_reveal-photo'));
-    switch(modalClassMod) {
-      case true:
-        modal.querySelector('.modal__photo').remove();
-        modal.querySelector('.modal__photo-caption').remove();
-        break;
-    };
   });
 });
 
