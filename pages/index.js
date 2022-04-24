@@ -1,6 +1,8 @@
 const editProfileBtn = document.querySelector('.profile__edit-button');
 const addCardBtn = document.querySelector('.profile__add-button');
-const submitBtns = document.querySelectorAll('.form__button');
+
+const editProfileForm = document.querySelector('[name="editProfile"]');
+const addCardForm = document.querySelector('[name="addCard"]');
 
 const elements = document.querySelector('.elements');
 const cardTpl = document.querySelector('#card').content;
@@ -73,6 +75,33 @@ function likeCard(card) {
   });
 }
 
+function submitEditProfileForm(form) {
+  formFieldTitle = form.querySelector('[name="editProfileTitle"]');
+  formFieldValue = form.querySelector('[name="editProfileSubtitle"]');
+  profileTitle.textContent = formFieldTitle.value;
+  profileSubtitle.textContent = formFieldValue.value;
+  hideModal(modal);
+}
+
+function submitAddCardForm(form) {
+  formFieldTitle = form.querySelector('[name="addCardTitle"]');
+  formFieldValue = form.querySelector('[name="addCardLink"]');
+  if(formFieldTitle.value && formFieldValue.value) {
+    cardPhotoCaption = formFieldTitle.value;
+    cardPhotoLink = formFieldValue.value;
+    newCard = createCard(cardPhotoCaption,cardPhotoLink);
+
+    elements.prepend(newCard);
+    formFieldTitle.value = '';
+    formFieldValue.value = '';
+
+    revealPhoto(newCard);
+    removeCard(newCard);
+    likeCard(newCard);
+  };
+  hideModal(modal);
+}
+
 initialCards.forEach(cardsEl => {
   newCard = createCard(cardsEl.name,cardsEl.link);
   elements.append(newCard);
@@ -101,38 +130,14 @@ modalCloseBtns.forEach(modalCloseBtnsEl => {
   });
 });
 
-submitBtns.forEach(submitBtnsEl => {
-  submitBtnsEl.addEventListener('click', e => {
-    e.preventDefault();
-    modal = e.target.closest('.modal');
-    modalClassMod = Boolean(modal.classList.contains('modal_target_edit-profile'));
-    switch(modalClassMod) {
-      case true:
-        formFieldTitle = modal.querySelector('[name="editProfileTitle"]');
-        formFieldValue = modal.querySelector('[name="editProfileSubtitle"]');
-        profileTitle.textContent = formFieldTitle.value;
-        profileSubtitle.textContent = formFieldValue.value;
-        break;
-      case false:
-        formFieldTitle = modal.querySelector('[name="addCardTitle"]');
-        formFieldValue = modal.querySelector('[name="addCardLink"]');
-        if(formFieldTitle.value && formFieldValue.value) {
-          cardPhotoCaption = formFieldTitle.value;
-          cardPhotoLink = formFieldValue.value;
-          newCard = createCard(cardPhotoCaption,cardPhotoLink);
+editProfileForm.addEventListener('submit', e => {
+  e.preventDefault();
+  submitEditProfileForm(e.target);
+});
 
-          elements.prepend(newCard);
-          formFieldTitle.value = '';
-          formFieldValue.value = '';
-
-          revealPhoto(newCard);
-          removeCard(newCard);
-          likeCard(newCard);
-        };
-        break;
-    };
-    hideModal(modal);
-  });
+addCardForm.addEventListener('submit', e => {
+  e.preventDefault();
+  submitAddCardForm(e.target);
 });
 
 cardsArr.forEach(cardsArrEl => {
