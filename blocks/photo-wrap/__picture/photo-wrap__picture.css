@@ -3,4 +3,5 @@
   height: 282px;
   object-fit: cover;
   pointer-events: none;
+  -moz-user-select: none;
 }
