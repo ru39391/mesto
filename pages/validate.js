@@ -50,7 +50,9 @@ function setEvtListeners(formEl) {
   fieldsArr.forEach(fieldsArrEl => {
     if(fieldsArrEl.value) {
       checkInputValidity(formEl, fieldsArrEl);
-    }
+    } else {
+      hideInputError(formEl, fieldsArrEl);
+    };
     fieldsArrEl.addEventListener('input', () => {
       checkInputValidity(formEl, fieldsArrEl);
       toggleBtnState(fieldsArr, btnEl);
@@ -61,11 +63,11 @@ function setEvtListeners(formEl) {
 function enableValidation() {
   const formsArr = Array.from(document.querySelectorAll(params.formSelector));
   formsArr.forEach(formsArrEl => {
-    formsArrEl.addEventListener('submit', (e) => {
+    formsArrEl.addEventListener('submit', e => {
       e.preventDefault();
     });
     setEvtListeners(formsArrEl);
   });
 };
 
-enableValidation();
+enableValidation(params);
