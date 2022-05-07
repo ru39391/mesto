@@ -47,8 +47,14 @@
 
         <form class="form" name="editProfile" action="#">
           <fieldset class="form__body">
-            <input class="form__field" name="editProfileTitle" type="text" value="">
-            <input class="form__field" name="editProfileSubtitle" type="text" value="">
+            <div class="form__field-holder">
+              <input class="form__field" name="editProfileTitle" minlength="2" maxlength="40" type="text" value="" placeholder="Имя" required>
+              <div class="form__error editProfileTitle-error"></div>
+            </div>
+            <div class="form__field-holder">
+              <input class="form__field" name="editProfileSubtitle" minlength="2" maxlength="200" type="text" value="" placeholder="О себе" required>
+              <div class="form__error editProfileSubtitle-error"></div>
+            </div>
           </fieldset>
           <button class="form__button" type="submit">Сохранить</button>
         </form>
@@ -64,8 +70,14 @@
 
         <form class="form" name="addCard" action="#">
           <fieldset class="form__body">
-            <input class="form__field" name="addCardTitle" type="text" value="" placeholder="Название">
-            <input class="form__field" name="addCardLink" type="text" value="" placeholder="Ссылка на картинку">
+            <div class="form__field-holder">
+              <input class="form__field" name="addCardTitle" minlength="2" maxlength="30" type="text" value="" placeholder="Название" required>
+              <div class="form__error addCardTitle-error"></div>
+            </div>
+            <div class="form__field-holder">
+              <input class="form__field" name="addCardLink" type="url" value="" placeholder="Ссылка на картинку" required>
+              <div class="form__error addCardLink-error"></div>
+            </div>
           </fieldset>
           <button class="form__button" type="submit">Сохранить</button>
         </form>
@@ -100,5 +112,6 @@
 
   <script src="pages/initialCards.js"></script>
   <script src="pages/index.js"></script>
+  <script src="pages/validate.js"></script>
 </body>
 </html>

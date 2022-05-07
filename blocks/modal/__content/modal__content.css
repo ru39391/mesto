@@ -1,4 +1,5 @@
 .modal__content {
+  width: 100%;
   max-width: 430px;
   color: #000;
   position: relative;

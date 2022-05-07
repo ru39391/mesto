@@ -94,10 +94,12 @@ initialCards.forEach(cardsEl => {
 editProfileBtn.addEventListener('click', () => {
   profileFormTitle.value = profileTitle.textContent;
   profileFormSubtitle.value = profileSubtitle.textContent;
+  setEvtListeners(modalTargetEditProfile.querySelector(params.formSelector));
   showModal(modalTargetEditProfile);
 });
 
 addCardBtn.addEventListener('click', () => {
+  setEvtListeners(modalTargetAddCard.querySelector(params.formSelector));
   showModal(modalTargetAddCard);
 });
 
