@@ -7,25 +7,25 @@ const params = {
   errorClass: 'form__error_visible'
 };
 
-function showInputError(formEl, inputEl, errorMsg) {
+function showInputError(formEl, inputEl, errorMsg, settings) {
   const errorEl = formEl.querySelector(`.${inputEl.name}-error`);
-  inputEl.classList.add(params.inputErrorClass);
+  inputEl.classList.add(settings.inputErrorClass);
   errorEl.textContent = errorMsg;
-  errorEl.classList.add(params.errorClass);
+  errorEl.classList.add(settings.errorClass);
 };
 
-function hideInputError(formEl, inputEl) {
+function hideInputError(formEl, inputEl, settings) {
   const errorEl = formEl.querySelector(`.${inputEl.name}-error`);
-  inputEl.classList.remove(params.inputErrorClass);
-  errorEl.classList.remove(params.errorClass);
+  inputEl.classList.remove(settings.inputErrorClass);
+  errorEl.classList.remove(settings.errorClass);
   errorEl.textContent = '';
 };
 
-function checkInputValidity(formEl, inputEl) {
+function checkInputValidity(formEl, inputEl, settings) {
   if (!inputEl.validity.valid) {
-    showInputError(formEl, inputEl, inputEl.validationMessage);
+    showInputError(formEl, inputEl, inputEl.validationMessage, settings);
   } else {
-    hideInputError(formEl, inputEl);
+    hideInputError(formEl, inputEl, settings);
   }
 };
 
@@ -33,40 +33,35 @@ function hasInvalidInput(fieldsArr) {
   return fieldsArr.some(fieldsArrEl => !fieldsArrEl.validity.valid);
 };
 
-function toggleBtnState(fieldsArr, btnEl) {
+function toggleBtnState(fieldsArr, btnEl, settings) {
   if(hasInvalidInput(fieldsArr)){
-    btnEl.classList.add(params.inactiveBtnClass);
+    btnEl.classList.add(settings.inactiveBtnClass);
     btnEl.disabled = true;
   } else {
-    btnEl.classList.remove(params.inactiveBtnClass);
+    btnEl.classList.remove(settings.inactiveBtnClass);
     btnEl.disabled = false;
   }
 };
 
-function setEvtListeners(formEl) {
-  const fieldsArr = Array.from(formEl.querySelectorAll(params.inputSelector));
-  const btnEl = formEl.querySelector(params.submitBtnSelector);
-  toggleBtnState(fieldsArr, btnEl);
+function setEvtListeners(formEl, settings) {
+  const fieldsArr = Array.from(formEl.querySelectorAll(settings.inputSelector));
+  const btnEl = formEl.querySelector(settings.submitBtnSelector);
+  toggleBtnState(fieldsArr, btnEl, settings);
   fieldsArr.forEach(fieldsArrEl => {
-    if(fieldsArrEl.value) {
-      checkInputValidity(formEl, fieldsArrEl);
-    } else {
-      hideInputError(formEl, fieldsArrEl);
-    };
     fieldsArrEl.addEventListener('input', () => {
-      checkInputValidity(formEl, fieldsArrEl);
-      toggleBtnState(fieldsArr, btnEl);
+      checkInputValidity(formEl, fieldsArrEl, settings);
+      toggleBtnState(fieldsArr, btnEl, settings);
     });
   });
 };
 
-function enableValidation() {
-  const formsArr = Array.from(document.querySelectorAll(params.formSelector));
+function enableValidation(settings) {
+  const formsArr = Array.from(document.querySelectorAll(settings.formSelector));
   formsArr.forEach(formsArrEl => {
     formsArrEl.addEventListener('submit', e => {
       e.preventDefault();
     });
-    setEvtListeners(formsArrEl);
+    setEvtListeners(formsArrEl, settings);
   });
 };
 

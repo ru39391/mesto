@@ -20,9 +20,29 @@ const modals = document.querySelectorAll('.modal');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 
+const modalPhoto = modalTargetPhoto.querySelector('.modal__photo');
+const modalCaption = modalTargetPhoto.querySelector('.modal__photo-caption');
+
+function checkFormValidity(e) {
+  const modal = e.currentTarget.querySelector('.modal_visible');
+  const form = modal.querySelector(params.formSelector);
+  if(form) {
+    const btnEl = form.querySelector(params.submitBtnSelector);
+    const fieldsArr = Array.from(form.querySelectorAll(params.inputSelector));
+    fieldsArr.forEach(fieldsArrEl => {
+      if(fieldsArrEl.value) {
+        checkInputValidity(form, fieldsArrEl, params);
+      } else {
+        hideInputError(form, fieldsArrEl, params);
+      };
+    });
+    toggleBtnState(fieldsArr, btnEl, params);
+  }
+}
+
 function hideModalByEsc(e) {
-  const modal = document.querySelector('.modal_visible');
   if(e.key == 'Escape') {
+    const modal = document.querySelector('.modal_visible');
     hideModal(modal);
   };
 };
@@ -30,16 +50,16 @@ function hideModalByEsc(e) {
 function showModal(modal) {
   modal.classList.add('modal_visible');
   document.addEventListener('keydown', hideModalByEsc);
+  document.addEventListener('click', checkFormValidity);
 }
 
 function hideModal(modal) {
   modal.classList.remove('modal_visible');
   document.removeEventListener('keydown', hideModalByEsc);
+  document.removeEventListener('click', checkFormValidity);
 }
 
 function createModalPhoto(cardTitle,cardLink) {
-  const modalPhoto = modalTargetPhoto.querySelector('.modal__photo');
-  const modalCaption = modalTargetPhoto.querySelector('.modal__photo-caption');
   modalPhoto.src = cardLink;
   modalPhoto.alt = cardTitle;
   modalCaption.textContent = cardTitle;
@@ -90,8 +110,7 @@ function submitEditProfileForm(form) {
 function submitAddCardForm(form) {
   if(cardFormTitle.value && cardFormLink.value) {
     elements.prepend(createCard(cardFormTitle.value,cardFormLink.value));
-    cardFormTitle.value = '';
-    cardFormLink.value = '';
+    form.reset();
   };
   hideModal(form.closest('.modal'));
 }
@@ -103,12 +122,10 @@ initialCards.forEach(cardsEl => {
 editProfileBtn.addEventListener('click', () => {
   profileFormTitle.value = profileTitle.textContent;
   profileFormSubtitle.value = profileSubtitle.textContent;
-  setEvtListeners(modalTargetEditProfile.querySelector(params.formSelector));
   showModal(modalTargetEditProfile);
 });
 
 addCardBtn.addEventListener('click', () => {
-  setEvtListeners(modalTargetAddCard.querySelector(params.formSelector));
   showModal(modalTargetAddCard);
 });
 

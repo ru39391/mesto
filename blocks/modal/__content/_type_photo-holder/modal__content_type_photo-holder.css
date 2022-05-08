@@ -1,4 +1,5 @@
 .modal__content_type_photo-holder {
+  width: auto;
   max-width: 75vw;
   padding: 0;
   color: #fff;
