@@ -23,21 +23,18 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 const modalPhoto = modalTargetPhoto.querySelector('.modal__photo');
 const modalCaption = modalTargetPhoto.querySelector('.modal__photo-caption');
 
-function checkFormValidity(e) {
-  const modal = e.currentTarget.querySelector('.modal_visible');
+function checkFormValidity(modal) {
   const form = modal.querySelector(params.formSelector);
-  if(form) {
-    const btnEl = form.querySelector(params.submitBtnSelector);
-    const fieldsArr = Array.from(form.querySelectorAll(params.inputSelector));
-    fieldsArr.forEach(fieldsArrEl => {
-      if(fieldsArrEl.value) {
-        checkInputValidity(form, fieldsArrEl, params);
-      } else {
-        hideInputError(form, fieldsArrEl, params);
-      };
-    });
-    toggleBtnState(fieldsArr, btnEl, params);
-  }
+  const btnEl = form.querySelector(params.submitBtnSelector);
+  const fieldsArr = Array.from(form.querySelectorAll(params.inputSelector));
+  fieldsArr.forEach(fieldsArrEl => {
+    if(fieldsArrEl.value) {
+      checkInputValidity(form, fieldsArrEl, params);
+    } else {
+      hideInputError(form, fieldsArrEl, params);
+    };
+  });
+  toggleBtnState(fieldsArr, btnEl, params);
 }
 
 function hideModalByEsc(e) {
@@ -50,13 +47,11 @@ function hideModalByEsc(e) {
 function showModal(modal) {
   modal.classList.add('modal_visible');
   document.addEventListener('keydown', hideModalByEsc);
-  document.addEventListener('click', checkFormValidity);
 }
 
 function hideModal(modal) {
   modal.classList.remove('modal_visible');
   document.removeEventListener('keydown', hideModalByEsc);
-  document.removeEventListener('click', checkFormValidity);
 }
 
 function createModalPhoto(cardTitle,cardLink) {
@@ -123,10 +118,12 @@ editProfileBtn.addEventListener('click', () => {
   profileFormTitle.value = profileTitle.textContent;
   profileFormSubtitle.value = profileSubtitle.textContent;
   showModal(modalTargetEditProfile);
+  checkFormValidity(modalTargetEditProfile);
 });
 
 addCardBtn.addEventListener('click', () => {
   showModal(modalTargetAddCard);
+  checkFormValidity(modalTargetAddCard);
 });
 
 modals.forEach(modalEl => {
