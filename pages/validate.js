@@ -1,12 +1,3 @@
-const params = {
-  formSelector: '.form',
-  inputSelector: '.form__field',
-  submitBtnSelector: '.form__button',
-  inactiveBtnClass: 'form__button_disabled',
-  inputErrorClass: 'form__field_type_error',
-  errorClass: 'form__error_visible'
-};
-
 function showInputError(formEl, inputEl, errorMsg, settings) {
   const errorEl = formEl.querySelector(`.${inputEl.name}-error`);
   inputEl.classList.add(settings.inputErrorClass);
@@ -43,26 +34,16 @@ function toggleBtnState(fieldsArr, btnEl, settings) {
   }
 };
 
-function setEvtListeners(formEl, settings) {
-  const fieldsArr = Array.from(formEl.querySelectorAll(settings.inputSelector));
-  const btnEl = formEl.querySelector(settings.submitBtnSelector);
-  toggleBtnState(fieldsArr, btnEl, settings);
+export function checkFormValidity(modal, settings) {
+  const form = modal.querySelector(settings.formSelector);
+  const btnEl = form.querySelector(settings.submitBtnSelector);
+  const fieldsArr = Array.from(form.querySelectorAll(settings.inputSelector));
   fieldsArr.forEach(fieldsArrEl => {
-    fieldsArrEl.addEventListener('input', () => {
-      checkInputValidity(formEl, fieldsArrEl, settings);
-      toggleBtnState(fieldsArr, btnEl, settings);
-    });
+    if(fieldsArrEl.value) {
+      checkInputValidity(form, fieldsArrEl, settings);
+    } else {
+      hideInputError(form, fieldsArrEl, settings);
+    };
   });
+  toggleBtnState(fieldsArr, btnEl, settings);
 };
-
-function enableValidation(settings) {
-  const formsArr = Array.from(document.querySelectorAll(settings.formSelector));
-  formsArr.forEach(formsArrEl => {
-    formsArrEl.addEventListener('submit', e => {
-      e.preventDefault();
-    });
-    setEvtListeners(formsArrEl, settings);
-  });
-};
-
-enableValidation(params);
