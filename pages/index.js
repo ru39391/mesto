@@ -1,5 +1,4 @@
 import {FormValidator} from './FormValidator.js';
-import {checkFormValidity} from './validate.js';
 import {Card} from './Card.js';
 import {initialCards} from './initialCards.js';
 import {modals, modalTargetEditProfile, modalTargetAddCard, showModal, hideModal} from './modals.js';
@@ -29,14 +28,23 @@ const elements = document.querySelector('.elements');
 const addCardBtn = document.querySelector('.profile__add-button');
 const editProfileBtn = document.querySelector('.profile__edit-button');
 
+function checkFormValidity(settings, parentEl) {
+  const formValidator = new FormValidator(settings, parentEl.querySelector(settings.formSelector));
+  formValidator.checkValidation();
+}
+
+function returnCard(data, tpl) {
+  const card = new Card(data, tpl);
+  return card.createCard();
+}
+
 function submitAddCardForm(form) {
   if(cardFormTitle.value && cardFormLink.value) {
     const cardValues = {
       name: cardFormTitle.value,
       link: cardFormLink.value,
     };
-    const card = new Card(cardValues, cardTplSelector);
-    elements.prepend(card.createCard());
+    elements.prepend(returnCard(cardValues, cardTplSelector));
     form.reset();
   };
   hideModal(form.closest('.modal'));
@@ -53,7 +61,7 @@ editProfileBtn.addEventListener('click', () => {
   profileFormTitle.value = profileTitle.textContent;
   profileFormSubtitle.value = profileSubtitle.textContent;
   showModal(modalTargetEditProfile);
-  checkFormValidity(modalTargetEditProfile, params);
+  checkFormValidity(params, modalTargetEditProfile);
 });
 
 profileForm.addEventListener('submit', e => {
@@ -63,13 +71,12 @@ profileForm.addEventListener('submit', e => {
 
 /* add cards */
 initialCards.forEach(initialCardsEl => {
-  const card = new Card(initialCardsEl, cardTplSelector);
-  elements.append(card.createCard());
+  elements.append(returnCard(initialCardsEl, cardTplSelector));
 });
 
 addCardBtn.addEventListener('click', () => {
   showModal(modalTargetAddCard);
-  checkFormValidity(modalTargetAddCard, params);
+  checkFormValidity(params, modalTargetAddCard);
 });
 
 cardForm.addEventListener('submit', e => {

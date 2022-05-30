@@ -52,7 +52,9 @@ export class FormValidator {
   };
 
   _setEvtListeners() {
-    this._toggleBtnState();
+    this._formEl.addEventListener('submit', e => {
+      e.preventDefault();
+    });
     this._getFieldsArr().forEach(fieldsArrEl => {
       fieldsArrEl.addEventListener('input', e => {
         this._checkInputValidity(e.target);
@@ -62,9 +64,18 @@ export class FormValidator {
   }
 
   enableValidation() {
-    this._formEl.addEventListener('submit', e => {
-      e.preventDefault();
-    });
     this._setEvtListeners();
+    this._toggleBtnState();
   };
+
+  checkValidation() {
+    this._getFieldsArr().forEach(fieldsArrEl => {
+      if(fieldsArrEl.value) {
+        this._checkInputValidity(fieldsArrEl);
+      } else {
+        this._hideInputError(fieldsArrEl);
+      };
+    });
+    this._toggleBtnState();
+  }
 }

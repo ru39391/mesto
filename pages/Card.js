@@ -5,6 +5,7 @@ export class Card {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._buttonLike = null;
   }
 
   _removeCard() {
@@ -19,7 +20,7 @@ export class Card {
   }
 
   _likeCard() {
-    this._card.querySelector('.photo-wrap__like-button').classList.toggle('photo-wrap__like-button_active');
+    this._buttonLike.classList.toggle('photo-wrap__like-button_active');
   }
 
   _setEventListeners() {
@@ -40,6 +41,7 @@ export class Card {
     this._card.querySelector('.photo-wrap__title').textContent = this._name;
     this._card.querySelector('.photo-wrap__picture').src = this._link;
     this._card.querySelector('.photo-wrap__picture').alt = this._name;
+    this._buttonLike = this._card.querySelector('.photo-wrap__like-button');
     return this._card;
   }
 }
