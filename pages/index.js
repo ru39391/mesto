@@ -11,7 +11,6 @@ const params = {
   inputErrorClass: 'form__field_type_error',
   errorClass: 'form__error_visible'
 };
-const forms = document.querySelectorAll(params.formSelector);
 
 const profileForm = document.forms.editProfile;
 const profileFormTitle = profileForm.elements.editProfileTitle;
@@ -28,10 +27,10 @@ const elements = document.querySelector('.elements');
 const addCardBtn = document.querySelector('.profile__add-button');
 const editProfileBtn = document.querySelector('.profile__edit-button');
 
-function checkFormValidity(settings, parentEl) {
-  const formValidator = new FormValidator(settings, parentEl.querySelector(settings.formSelector));
-  formValidator.enableValidation();
-}
+const validators = {
+  profileForm: new FormValidator(params, profileForm),
+  cardForm: new FormValidator(params, cardForm)
+};
 
 function returnCard(data, tpl) {
   const card = new Card(data, tpl);
@@ -60,8 +59,8 @@ function submitEditProfileForm(form) {
 editProfileBtn.addEventListener('click', () => {
   profileFormTitle.value = profileTitle.textContent;
   profileFormSubtitle.value = profileSubtitle.textContent;
+  validators.profileForm.checkValidation();
   showModal(modalTargetEditProfile);
-  checkFormValidity(params, modalTargetEditProfile);
 });
 
 profileForm.addEventListener('submit', e => {
@@ -75,8 +74,8 @@ initialCards.forEach(initialCardsEl => {
 });
 
 addCardBtn.addEventListener('click', () => {
+  validators.cardForm.checkValidation();
   showModal(modalTargetAddCard);
-  checkFormValidity(params, modalTargetAddCard);
 });
 
 cardForm.addEventListener('submit', e => {
@@ -84,21 +83,17 @@ cardForm.addEventListener('submit', e => {
   submitAddCardForm(e.target);
 });
 
+/* validation */
+Object.values(validators).forEach(validatorsEl => {
+  validatorsEl.enableValidation();
+});
+
 /* close modals */
 modals.forEach(modalEl => {
   modalEl.addEventListener('click', e => {
     const modal = e.target.closest('.modal');
-    const modalCloseBtn = modal.querySelector('.modal__close');
-    switch(Boolean(e.target.closest('.modal__content'))) {
-      case true:
-        if(e.target == modalCloseBtn){
-          hideModal(modal);
-        }
-        break;
-
-      case false:
-        hideModal(modal);
-        break;
-    };
+    if (e.target.classList.contains('modal__close') || e.target.classList.contains('modal')) {
+      hideModal(modal);
+    }
   });
 });

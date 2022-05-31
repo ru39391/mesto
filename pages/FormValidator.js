@@ -66,6 +66,9 @@ export class FormValidator {
   enableValidation() {
     this._setEvtListeners();
     this._toggleBtnState();
+  };
+
+  checkValidation() {
     this._getFieldsArr().forEach(fieldsArrEl => {
       if(fieldsArrEl.value) {
         this._checkInputValidity(fieldsArrEl);
@@ -73,5 +76,6 @@ export class FormValidator {
         this._hideInputError(fieldsArrEl);
       };
     });
+    this._toggleBtnState();
   };
 }
