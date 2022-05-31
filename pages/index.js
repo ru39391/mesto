@@ -30,7 +30,7 @@ const editProfileBtn = document.querySelector('.profile__edit-button');
 
 function checkFormValidity(settings, parentEl) {
   const formValidator = new FormValidator(settings, parentEl.querySelector(settings.formSelector));
-  formValidator.checkValidation();
+  formValidator.enableValidation();
 }
 
 function returnCard(data, tpl) {
@@ -101,10 +101,4 @@ modals.forEach(modalEl => {
         break;
     };
   });
-});
-
-/* validate forms */
-forms.forEach(formsEl => {
-  const formValidator = new FormValidator(params, formsEl);
-  formValidator.enableValidation();
 });
