@@ -1,4 +1,5 @@
-import {modalTargetPhoto, modalPhoto, modalCaption, showModal} from './modals.js';
+import {PopupWithImage} from './PopupWithImage.js';
+import {modalConfig} from '../utils/constants.js';
 
 export class Card {
   constructor(data, cardSelector) {
@@ -14,10 +15,12 @@ export class Card {
   }
 
   _revealPhoto() {
-    modalPhoto.src = this._link;
-    modalPhoto.alt = this._name;
-    modalCaption.textContent = this._name;
-    showModal(modalTargetPhoto);
+    const modalPhoto = new PopupWithImage({
+      name: this._name,
+      link: this._link
+    }, modalConfig.targetPhotoSelector);
+    modalPhoto.setEventListeners();
+    modalPhoto.open();
   }
 
   _likeCard() {
