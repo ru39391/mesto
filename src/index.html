@@ -4,30 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto Russia</title>
-  <link rel="stylesheet" href="pages/index.css">
 </head>
 <body>
   <div class="page">
     <header class="header">
-      <img class="header__logo" src="images/header/header__logo.svg" alt="Место" />
+      <img class="header__logo" src="<%=require('./images/header/header__logo.svg')%>" alt="Место" />
     </header>
 
     <main class="content">
       <section class="profile">
         <div class="profile__aside">
-          <img class="profile__avatar" src="images/profile/profile__avatar.png" alt="Жак-Ив Кусто" />
+          <img class="profile__avatar" src="<%=require('./images/profile/profile__avatar.png')%>" alt="Жак-Ив Кусто" />
           <div class="profile__info">
             <div class="profile__info-heading">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
               <button class="profile__edit-button" type="button">
-                <img src="images/profile/profile__edit-button.svg" alt="Редактировать профиль" />
+                <img src="<%=require('./images/profile/profile__edit-button.svg')%>" alt="Редактировать профиль" />
               </button>
             </div>
             <p class="profile__subtitle">Исследователь океана</p>
           </div>
         </div>
         <button class="profile__add-button" type="button">
-          <img src="images/profile/profile__add-button.svg" alt="Добавть фото" />
+          <img src="<%=require('./images/profile/profile__add-button.svg')%>" alt="Добавть фото" />
         </button>
       </section>
 
@@ -41,7 +40,7 @@
     <div class="modal modal_target_edit-profile">
       <div class="modal__content">
         <button class="modal__close" type="button">
-          <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно" />
+          <img class="modal__close-icon" src="<%=require('./images/modal/modal__close.svg')%>" alt="Закрыть всплывающее окно" />
         </button>
         <h2 class="modal__title">Редактировать профиль</h2>
 
@@ -64,7 +63,7 @@
     <div class="modal modal_target_add-card">
       <div class="modal__content">
         <button class="modal__close" type="button">
-          <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно" />
+          <img class="modal__close-icon" src="<%=require('./images/modal/modal__close.svg')%>" alt="Закрыть всплывающее окно" />
         </button>
         <h2 class="modal__title">Новое место</h2>
 
@@ -87,7 +86,7 @@
     <div class="modal modal_target_reveal-photo modal_bg_dark">
       <div class="modal__content modal__content_type_photo-holder">
         <button class="modal__close" type="button">
-          <img class="modal__close-icon" src="images/modal/modal__close.svg" alt="Закрыть всплывающее окно">
+          <img class="modal__close-icon" src="<%=require('./images/modal/modal__close.svg')%>" alt="Закрыть всплывающее окно">
         </button>
         <img class="modal__photo" src="#" alt="">
         <p class="modal__photo-caption"></p>
@@ -104,12 +103,10 @@
           <button class="photo-wrap__like-button" type="button"></button>
         </div>
         <button class="photo-wrap__remove-button" type="button">
-          <img class="photo-wrap__remove-icon" src="images/photo-wrap/photo-wrap__remove-button.svg" alt="Добавить в избранное" />
+          <img class="photo-wrap__remove-icon" src="<%=require('./images/photo-wrap/photo-wrap__remove-button.svg')%>" alt="Удалить" />
         </button>
       </article>
     </template>
   </div>
-
-  <script type="module" src="pages/index.js"></script>
 </body>
 </html>

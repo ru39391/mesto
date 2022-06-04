@@ -1,10 +1,8 @@
-import {PopupWithImage} from './PopupWithImage.js';
-import {modalConfig} from '../utils/constants.js';
-
 export class Card {
-  constructor(data, cardSelector) {
+  constructor({data, revealPhoto}, cardSelector) {
     this._name = data.name;
     this._link = data.link;
+    this._revealPhoto = revealPhoto;
     this._cardSelector = cardSelector;
     this._buttonLike = null;
   }
@@ -12,15 +10,6 @@ export class Card {
   _removeCard() {
     this._card.remove();
     this._card = null;
-  }
-
-  _revealPhoto() {
-    const modalPhoto = new PopupWithImage({
-      name: this._name,
-      link: this._link
-    }, modalConfig.targetPhotoSelector);
-    modalPhoto.setEventListeners();
-    modalPhoto.open();
   }
 
   _likeCard() {
@@ -32,7 +21,10 @@ export class Card {
       this._removeCard();
     });
     this._card.querySelector('.photo-wrap__photo-holder').addEventListener('click', () => {
-      this._revealPhoto();
+      this._revealPhoto({
+        name: this._name,
+        link: this._link
+      });
     });
     this._card.querySelector('.photo-wrap__like-button').addEventListener('click', () => {
       this._likeCard();

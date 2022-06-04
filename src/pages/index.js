@@ -2,6 +2,7 @@ import {FormValidator} from '../components/FormValidator.js';
 import {Card} from '../components/Card.js';
 import {Section} from '../components/Section.js';
 import {UserInfo} from '../components/UserInfo.js';
+import {PopupWithImage} from '../components/PopupWithImage.js';
 import {PopupWithForm} from '../components/PopupWithForm.js';
 
 import {forms, profileForm, btns, items, modalConfig, formConfig, userConfig, initialCards} from '../utils/constants.js';
@@ -12,8 +13,19 @@ const validators = {
   cardFormValidator: new FormValidator(formConfig, forms.card)
 };
 
+function showModalPhoto(data, tpl) {
+  const modalPhoto = new PopupWithImage(data, tpl);
+  modalPhoto.setEventListeners();
+  modalPhoto.open();
+}
+
 function returnCard(data, tpl) {
-  const card = new Card(data, tpl);
+  const card = new Card({
+    data: data,
+    revealPhoto: (data) => {
+      showModalPhoto(data, modalConfig.targetPhotoSelector);
+    }
+  }, tpl);
   return card.createCard();
 }
 
