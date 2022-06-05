@@ -7,15 +7,12 @@ export class FormValidator {
     this._inputErrorClass = settings.inputErrorClass,
     this._errorClass = settings.errorClass,
     this._formEl = formEl;
+    this._btnEl = this._formEl.querySelector(this._submitBtnSelector);
+    this._fieldsArr = Array.from(this._formEl.querySelectorAll(this._inputSelector));
   }
 
-  _getFieldsArr() {
-    const fieldsArr = Array.from(this._formEl.querySelectorAll(this._inputSelector));
-    return fieldsArr;
-  };
-
   _hasInvalidInput() {
-    return this._getFieldsArr().some(fieldsArrEl => !fieldsArrEl.validity.valid);
+    return this._fieldsArr.some(fieldsArrEl => !fieldsArrEl.validity.valid);
   };
 
   _showInputError(inputEl) {
@@ -41,13 +38,12 @@ export class FormValidator {
   };
 
   _toggleBtnState() {
-    const btnEl = this._formEl.querySelector(this._submitBtnSelector);
     if(this._hasInvalidInput()){
-      btnEl.classList.add(this._inactiveBtnClass);
-      btnEl.disabled = true;
+      this._btnEl.classList.add(this._inactiveBtnClass);
+      this._btnEl.disabled = true;
     } else {
-      btnEl.classList.remove(this._inactiveBtnClass);
-      btnEl.disabled = false;
+      this._btnEl.classList.remove(this._inactiveBtnClass);
+      this._btnEl.disabled = false;
     }
   };
 
@@ -55,7 +51,7 @@ export class FormValidator {
     this._formEl.addEventListener('submit', e => {
       e.preventDefault();
     });
-    this._getFieldsArr().forEach(fieldsArrEl => {
+    this._fieldsArr.forEach(fieldsArrEl => {
       fieldsArrEl.addEventListener('input', e => {
         this._checkInputValidity(e.target);
         this._toggleBtnState();
@@ -69,7 +65,7 @@ export class FormValidator {
   };
 
   checkValidation() {
-    this._getFieldsArr().forEach(fieldsArrEl => {
+    this._fieldsArr.forEach(fieldsArrEl => {
       if(fieldsArrEl.value) {
         this._checkInputValidity(fieldsArrEl);
       } else {

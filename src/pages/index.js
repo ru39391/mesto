@@ -13,30 +13,27 @@ const validators = {
   cardFormValidator: new FormValidator(formConfig, forms.card)
 };
 
-function showModalPhoto(data, tpl) {
-  const modalPhoto = new PopupWithImage(data, tpl);
-  modalPhoto.setEventListeners();
-  modalPhoto.open();
-}
-
 function returnCard(data, tpl) {
   const card = new Card({
     data: data,
     revealPhoto: (data) => {
-      showModalPhoto(data, modalConfig.targetPhotoSelector);
+      modalPhoto.open(data);
     }
   }, tpl);
   return card.createCard();
 }
 
+/* reveal photo */
+const modalPhoto = new PopupWithImage(modalConfig.targetPhotoSelector);
+modalPhoto.setEventListeners();
+
 /* add elements */
 const initialCardList = new Section({
-  items: initialCards,
   renderer: (item) => {
     initialCardList.addItem(returnCard(item, items.tplSelector));
   }
 }, items.parentSelector);
-initialCardList.renderData();
+initialCardList.renderData(initialCards);
 
 /* add card */
 const cardFormModal = new PopupWithForm({
@@ -53,22 +50,23 @@ btns.targetAddCard.addEventListener('click', () => {
 });
 
 /* edit profile */
-const userData = new UserInfo({
+const userInfo = new UserInfo({
   userTitleSelector: userConfig.titleSelector,
   userSubtitleSelector: userConfig.subtitleSelector
 });
 
 const profileFormModal = new PopupWithForm({
   renderer: (data) => {
-    userData.setUserInfo(data.title,data.subtitle);
+    userInfo.setUserInfo(data.title,data.subtitle);
     profileFormModal.close();
   }
 }, modalConfig.targetEditProfileSelector);
 profileFormModal.setEventListeners();
 
 btns.targetEditProfile.addEventListener('click', () => {
-  profileForm.title.value = userData.getUserInfo().title;
-  profileForm.subtitle.value = userData.getUserInfo().subtitle;
+  const userData = userInfo.getUserInfo();
+  profileForm.title.value = userData.title;
+  profileForm.subtitle.value = userData.subtitle;
   validators.profileFormValidator.checkValidation();
   profileFormModal.open();
 });

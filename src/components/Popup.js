@@ -3,10 +3,11 @@ import {modalConfig} from '../utils/constants.js';
 export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
-  _handleEscClose(evt) {
-    if(evt.key == 'Escape') {
+  _handleEscClose(e) {
+    if(e.key == 'Escape') {
       this.close();
     }
   }
@@ -21,15 +22,11 @@ export class Popup {
 
   open() {
     this._popup.classList.add(modalConfig.visibleClass);
-    document.addEventListener('keydown', e => {
-      this._handleEscClose(e);
-    });
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   close() {
     this._popup.classList.remove(modalConfig.visibleClass);
-    document.removeEventListener('keydown', e => {
-      this._handleEscClose(e);
-    });
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 }
