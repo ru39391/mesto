@@ -1,7 +1,0 @@
-@media (max-width:767px) {
-  .header__logo {
-    width: 104px;
-    height: 24px;
-    object-fit: cover;
-  }
-}
