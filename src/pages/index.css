@@ -27,6 +27,8 @@
 @import url(../blocks/photo-wrap/photo-wrap.css);
 @import url(../blocks/photo-wrap/__info/photo-wrap__info.css);
 @import url(../blocks/photo-wrap/__title/photo-wrap__title.css);
+@import url(../blocks/photo-wrap/__likes/photo-wrap__likes.css);
+@import url(../blocks/photo-wrap/__likes-counter/photo-wrap__likes-counter.css);
 @import url(../blocks/photo-wrap/__like-button/photo-wrap__like-button.css);
 @import url(../blocks/photo-wrap/__like-button/_active/photo-wrap__like-button_active.css);
 @import url(../blocks/photo-wrap/__like-icon/photo-wrap__like-icon.css);

@@ -29,6 +29,7 @@ export const modalConfig = {
   closeBtnClass: 'modal__close',
   targetEditProfileSelector: '.modal_target_edit-profile',
   targetAddCardSelector: '.modal_target_add-card',
+  targetRemoveCardSelector: '.modal_target_remove-card',
   targetPhotoSelector: '.modal_target_reveal-photo',
   photoSelector: '.modal__photo',
   photoCaptionSelector: '.modal__photo-caption',

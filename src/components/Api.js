@@ -21,6 +21,39 @@ export class Api {
       .then(res => this._responseRenderer(res, 'Ошибка при загрузке карточек'));
   }
 
+  addCard(data) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link
+      })
+    })
+      .then(res => this._responseRenderer(res, 'Ошибка при добавление новой карточки'));
+  }
+
+  removeCard(data) {
+    return fetch(`${this._baseUrl}/cards/${data.id}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return {
+            card: data.card
+          };
+        }
+
+        return Promise.reject(`Ошибка при удалении карточки: ${result.status}`);
+      });
+  }
+
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
