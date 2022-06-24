@@ -6,14 +6,14 @@ export class UserInfo {
 
   getUserInfo() {
     const userData = {
-      title: this._userTitle.textContent,
-      subtitle: this._userSubtitle.textContent,
+      name: this._userTitle.textContent,
+      about: this._userSubtitle.textContent,
     };
     return userData;
   }
 
-  setUserInfo(title, subtitle) {
-    this._userTitle.textContent = title;
-    this._userSubtitle.textContent = subtitle;
+  setUserInfo(name, about) {
+    this._userTitle.textContent = name;
+    this._userSubtitle.textContent = about;
   }
 }

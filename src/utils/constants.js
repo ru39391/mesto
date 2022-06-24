@@ -4,8 +4,8 @@ export const forms = {
 }
 
 export const profileForm = {
-  title: forms.profile.elements.title,
-  subtitle: forms.profile.elements.subtitle
+  name: forms.profile.elements.name,
+  about: forms.profile.elements.about
 }
 
 export const cardForm = {
@@ -46,31 +46,10 @@ export const formConfig = {
 export const userConfig = {
   titleSelector: '.profile__title',
   subtitleSelector: '.profile__subtitle',
+  avatarSelector: '.profile__avatar'
 }
 
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+export const access = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-43',
+  token: 'bee12215-09da-441f-9f38-f7f695bca43f',
+}
