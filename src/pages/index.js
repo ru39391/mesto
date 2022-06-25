@@ -28,8 +28,27 @@ function returnCard(item, currentUserId, tpl) {
     revealPhoto: (data) => {
       modalPhoto.open(data);
     },
-    revealConfirmation: (data) => {
+    revealRemoveConfirmation: (data) => {
       cardRemoveModal.open(data);
+    },
+    setLikes: (data) => {
+      if(data.isLiked) {
+        api.likeCard(data)
+          .then((res) => {
+            card.refreshLikesCounter(res.likes.length);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        api.unlikeCard(data)
+          .then((res) => {
+            card.refreshLikesCounter(res.likes.length);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   }, tpl);
   return card.createCard();
@@ -55,6 +74,7 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     userAvatar.setUserPic(userData.avatar);
 
     initialCardList.renderData(initialCards);
+    console.log(initialCards[0]);
   })
   .catch((err) => {
     console.log(err);
@@ -80,7 +100,7 @@ btns.targetAddCard.addEventListener('click', () => {
   cardFormModal.open();
 });
 
-/* remove elements */
+/* remove card */
 const cardRemoveModal = new PopupWithConfirmation({
   renderer: (item) => {
     api.removeCard(item)

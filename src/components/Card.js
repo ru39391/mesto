@@ -1,13 +1,15 @@
 export class Card {
-  constructor({data, currentOwner, revealPhoto, revealConfirmation}, cardSelector) {
+  constructor({data, currentOwner, revealPhoto, revealRemoveConfirmation, setLikes}, cardSelector) {
     this._id = data._id;
     this._name = data.name;
     this._link = data.link;
-    this._likes = data.likes.length;
     this._owner = data.owner._id;
+    this._likes = data.likes;
+    this._isLiked = false;
     this._currentOwner = currentOwner;
     this._revealPhoto = revealPhoto;
-    this._revealConfirmation = revealConfirmation;
+    this._revealRemoveConfirmation = revealRemoveConfirmation;
+    this._setLikes = setLikes;
     this._cardSelector = cardSelector;
     this._cardPhotoHolder = null;
     this._cardPhoto = null;
@@ -22,8 +24,26 @@ export class Card {
     item = null;
   }
 
+  _setLikeActiveClass() {
+    const usersLikes = [];
+    this._likes.forEach(likesArrEl => {
+      usersLikes.push(likesArrEl._id);
+    });
+    if(usersLikes.indexOf(this._currentOwner) != -1) {
+      this._buttonLike.classList.add('photo-wrap__like-button_active');
+    } else {
+      this._buttonLike.classList.remove('photo-wrap__like-button_active');
+    }
+  }
+
   _likeCard() {
-    this._buttonLike.classList.toggle('photo-wrap__like-button_active');
+    const btnLikeClass = this._buttonLike.classList;
+    btnLikeClass.toggle('photo-wrap__like-button_active');
+    if(btnLikeClass.contains('photo-wrap__like-button_active')) {
+      this._isLiked = true;
+    } else {
+      this._isLiked = false;
+    }
   }
 
   _setEventListeners() {
@@ -35,15 +55,23 @@ export class Card {
     });
     this._buttonLike.addEventListener('click', () => {
       this._likeCard();
+      this._setLikes({
+        id: this._id,
+        isLiked: this._isLiked
+      });
     });
     if(this._owner == this._currentOwner) {
       this._buttonRemove.addEventListener('click', () => {
-        this._revealConfirmation({
+        this._revealRemoveConfirmation({
           id: this._id,
           card: this._card
         });
       });
     }
+  }
+
+  refreshLikesCounter(counter) {
+    this._cardLikes.textContent = counter;
   }
 
   createCard() {
@@ -56,13 +84,14 @@ export class Card {
     this._cardTitle.textContent = this._name;
     this._cardPhoto.src = this._link;
     this._cardPhoto.alt = this._name;
-    this._cardLikes.textContent = this._likes;
     if(this._owner == this._currentOwner) {
       this._buttonRemove = this._card.querySelector('.photo-wrap__remove-button');
     }
     if(!this._buttonRemove) {
       this._removeEl(this._card.querySelector('.photo-wrap__remove-button'));
     }
+    this.refreshLikesCounter(this._likes.length);
+    this._setLikeActiveClass();
     this._setEventListeners();
     return this._card;
   }

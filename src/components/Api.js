@@ -54,6 +54,26 @@ export class Api {
       });
   }
 
+  likeCard(data) {
+    return fetch(`${this._baseUrl}/cards/${data.id}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token
+      }
+    })
+      .then(res => this._responseRenderer(res, 'Ошибка при добавлении в избранное'));
+  }
+
+  unlikeCard(data) {
+    return fetch(`${this._baseUrl}/cards/${data.id}/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token
+      }
+    })
+      .then(res => this._responseRenderer(res, 'Ошибка при удалении из избранного'));
+  }
+
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
