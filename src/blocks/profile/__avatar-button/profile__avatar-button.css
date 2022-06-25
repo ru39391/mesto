@@ -13,7 +13,7 @@
   align-items: center;
   justify-content: center;
   transition: all .3s ease;
-  background-color: rgba(0, 0, 0, 0.8);;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .profile__avatar-button:hover {
