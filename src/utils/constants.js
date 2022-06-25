@@ -1,6 +1,8 @@
 export const forms = {
   profile: document.forms.editProfile,
-  card: document.forms.addCard
+  userpic: document.forms.updateUserpic,
+  cardNew: document.forms.addCard,
+  cardRemove: document.forms.removeCard
 }
 
 export const profileForm = {
@@ -8,13 +10,18 @@ export const profileForm = {
   about: forms.profile.elements.about
 }
 
+export const userpicForm = {
+  link: forms.userpic.elements.link
+}
+
 export const cardForm = {
-  name: forms.card.elements.name,
-  link: forms.card.elements.link
+  name: forms.cardNew.elements.name,
+  link: forms.cardNew.elements.link
 }
 
 export const btns = {
   targetEditProfile: document.querySelector('.profile__edit-button'),
+  targetUpdateUserpic: document.querySelector('.profile__avatar-button'),
   targetAddCard: document.querySelector('.profile__add-button')
 }
 
@@ -28,6 +35,7 @@ export const modalConfig = {
   visibleClass: 'modal_visible',
   closeBtnClass: 'modal__close',
   targetEditProfileSelector: '.modal_target_edit-profile',
+  targetUpdateUserpicSelector: '.modal_target_update-userpic',
   targetAddCardSelector: '.modal_target_add-card',
   targetRemoveCardSelector: '.modal_target_remove-card',
   targetPhotoSelector: '.modal_target_reveal-photo',
@@ -48,6 +56,12 @@ export const userConfig = {
   titleSelector: '.profile__title',
   subtitleSelector: '.profile__subtitle',
   avatarSelector: '.profile__avatar'
+}
+
+export const btnConfig = {
+  captionSelector: '.form__button-caption',
+  loaderSelector: '.form__button-loading',
+  loaderCaption: 'Сохранение...'
 }
 
 export const access = {

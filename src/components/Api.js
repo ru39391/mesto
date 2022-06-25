@@ -97,4 +97,18 @@ export class Api {
     })
       .then(res => this._responseRenderer(res, 'Ошибка при обновлении данных пользователя'));
   }
+
+  setUserPic(data) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: data.link
+      })
+    })
+      .then(res => this._responseRenderer(res, 'Ошибка при обновлении изображения пользователя'));
+  }
 }

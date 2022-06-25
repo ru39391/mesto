@@ -8,7 +8,7 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 
-import { forms, profileForm, btns, items, modalConfig, formConfig, userConfig, access } from '../utils/constants.js';
+import { forms, profileForm, userpicForm, btns, items, modalConfig, formConfig, userConfig, access } from '../utils/constants.js';
 
 let userDataId;
 
@@ -18,9 +18,11 @@ const api = new Api(access);
 /* validators */
 const validators = {
   profileFormValidator: new FormValidator(formConfig, forms.profile),
-  cardFormValidator: new FormValidator(formConfig, forms.card)
+  userpicFormValidator: new FormValidator(formConfig, forms.userpic),
+  cardFormValidator: new FormValidator(formConfig, forms.cardNew)
 };
 
+/* card creation */
 function returnCard(item, currentUserId, tpl) {
   const card = new Card({
     data: item,
@@ -74,7 +76,6 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     userAvatar.setUserPic(userData.avatar);
 
     initialCardList.renderData(initialCards);
-    console.log(initialCards[0]);
   })
   .catch((err) => {
     console.log(err);
@@ -90,6 +91,9 @@ const cardFormModal = new PopupWithForm({
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        validators.cardFormValidator.renderLoading(false);
       });
   }
 }, modalConfig.targetAddCardSelector);
@@ -130,6 +134,9 @@ const profileFormModal = new PopupWithForm({
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        validators.profileFormValidator.renderLoading(false);
       });
   }
 }, modalConfig.targetEditProfileSelector);
@@ -141,6 +148,31 @@ btns.targetEditProfile.addEventListener('click', () => {
   profileForm.about.value = userData.about;
   validators.profileFormValidator.checkValidation();
   profileFormModal.open();
+});
+
+/* update userpic */
+const userpicFormModal = new PopupWithForm({
+  renderer: (data) => {
+    api.setUserPic(data)
+      .then((res) => {
+        userAvatar.setUserPic(res.avatar);
+        userpicFormModal.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        validators.userpicFormValidator.renderLoading(false);
+      });
+  }
+}, modalConfig.targetUpdateUserpicSelector);
+userpicFormModal.setEventListeners();
+
+btns.targetUpdateUserpic.addEventListener('click', () => {
+  const userPic = userAvatar.getUserPic();
+  userpicForm.link.value = userPic;
+  validators.userpicFormValidator.checkValidation();
+  userpicFormModal.open();
 });
 
 /* validation */
