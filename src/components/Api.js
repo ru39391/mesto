@@ -1,7 +1,7 @@
 export class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl,
-    this._token = options.token
+    this._headers = options.headers
   }
 
   _responseRenderer(result, resultAlert) {
@@ -14,9 +14,7 @@ export class Api {
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: {
-        authorization: this._token
-      }
+      headers: this._headers
     })
       .then(res => this._responseRenderer(res, 'Ошибка при загрузке карточек'));
   }
@@ -24,10 +22,7 @@ export class Api {
   addCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -39,9 +34,7 @@ export class Api {
   removeCard(data) {
     return fetch(`${this._baseUrl}/cards/${data.id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._token
-      }
+      headers: this._headers
     })
       .then(res => {
         if (res.ok) {
@@ -57,9 +50,7 @@ export class Api {
   likeCard(data) {
     return fetch(`${this._baseUrl}/cards/${data.id}/likes`, {
       method: 'PUT',
-      headers: {
-        authorization: this._token
-      }
+      headers: this._headers
     })
       .then(res => this._responseRenderer(res, 'Ошибка при добавлении в избранное'));
   }
@@ -67,18 +58,14 @@ export class Api {
   unlikeCard(data) {
     return fetch(`${this._baseUrl}/cards/${data.id}/likes`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._token
-      }
+      headers: this._headers
     })
       .then(res => this._responseRenderer(res, 'Ошибка при удалении из избранного'));
   }
 
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        authorization: this._token
-      }
+      headers: this._headers
     })
       .then(res => this._responseRenderer(res, 'Ошибка при получении данных пользователя'));
   }
@@ -86,10 +73,7 @@ export class Api {
   setUserData(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -101,10 +85,7 @@ export class Api {
   setUserPic(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data.link
       })

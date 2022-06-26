@@ -3,7 +3,6 @@ import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
-import { UserPic } from '../components/UserPic.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
@@ -13,7 +12,13 @@ import { forms, profileForm, userpicForm, btns, items, modalConfig, formConfig, 
 let userDataId;
 
 /* api */
-const api = new Api(access);
+const api = new Api({
+  baseUrl: access.baseUrl,
+  headers: {
+    authorization: access.token,
+    'Content-Type': 'application/json'
+  }
+});
 
 /* validators */
 const validators = {
@@ -57,10 +62,10 @@ function returnCard(item, currentUserId, tpl) {
 }
 
 /* add elements & set user data */
-const userAvatar = new UserPic(userConfig.avatarSelector);
 const userInfo = new UserInfo({
   userTitleSelector: userConfig.titleSelector,
-  userSubtitleSelector: userConfig.subtitleSelector
+  userSubtitleSelector: userConfig.subtitleSelector,
+  userAvatarSelector: userConfig.avatarSelector
 });
 
 const initialCardList = new Section({
@@ -72,9 +77,8 @@ const initialCardList = new Section({
 Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([userData, initialCards]) => {
     userDataId = userData._id;
+    userInfo.setUserPic(userData.avatar);
     userInfo.setUserInfo(userData.name, userData.about);
-    userAvatar.setUserPic(userData.avatar);
-
     initialCardList.renderData(initialCards);
   })
   .catch((err) => {
@@ -93,7 +97,7 @@ const cardFormModal = new PopupWithForm({
         console.log(err);
       })
       .finally(() => {
-        validators.cardFormValidator.renderLoading(false);
+        cardFormModal.renderLoading(false);
       });
   }
 }, modalConfig.targetAddCardSelector);
@@ -136,7 +140,7 @@ const profileFormModal = new PopupWithForm({
         console.log(err);
       })
       .finally(() => {
-        validators.profileFormValidator.renderLoading(false);
+        profileFormModal.renderLoading(false);
       });
   }
 }, modalConfig.targetEditProfileSelector);
@@ -155,22 +159,22 @@ const userpicFormModal = new PopupWithForm({
   renderer: (data) => {
     api.setUserPic(data)
       .then((res) => {
-        userAvatar.setUserPic(res.avatar);
+        userInfo.setUserPic(res.avatar);
         userpicFormModal.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        validators.userpicFormValidator.renderLoading(false);
+        userpicFormModal.renderLoading(false);
       });
   }
 }, modalConfig.targetUpdateUserpicSelector);
 userpicFormModal.setEventListeners();
 
 btns.targetUpdateUserpic.addEventListener('click', () => {
-  const userPic = userAvatar.getUserPic();
-  userpicForm.link.value = userPic;
+  const userData = userInfo.getUserInfo();
+  userpicForm.link.value = userData.avatar;
   validators.userpicFormValidator.checkValidation();
   userpicFormModal.open();
 });

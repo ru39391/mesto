@@ -1,5 +1,3 @@
-import {btnConfig} from '../utils/constants.js';
-
 export class FormValidator {
   constructor(settings, formEl) {
     this._formSelector = settings.formSelector,
@@ -52,7 +50,6 @@ export class FormValidator {
   _setEvtListeners() {
     this._formEl.addEventListener('submit', e => {
       e.preventDefault();
-      this.renderLoading(true);
     });
     this._fieldsArr.forEach(fieldsArrEl => {
       fieldsArrEl.addEventListener('input', e => {
@@ -60,18 +57,6 @@ export class FormValidator {
         this._toggleBtnState();
       });
     });
-  }
-
-  renderLoading(isLoading) {
-    if(isLoading) {
-      this._btnEl.querySelector(btnConfig.captionSelector).style.display = 'none';
-      this._btnEl.querySelector(btnConfig.loaderSelector).style.display = 'block';
-      this._btnEl.querySelector(btnConfig.loaderSelector).textContent = btnConfig.loaderCaption;
-    } else {
-      this._btnEl.querySelector(btnConfig.captionSelector).style.display = 'block';
-      this._btnEl.querySelector(btnConfig.loaderSelector).style.display = 'none';
-      this._btnEl.querySelector(btnConfig.loaderSelector).textContent = '';
-    }
   }
 
   enableValidation() {

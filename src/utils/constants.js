@@ -60,8 +60,8 @@ export const userConfig = {
 
 export const btnConfig = {
   captionSelector: '.form__button-caption',
-  loaderSelector: '.form__button-loading',
-  loaderCaption: 'Сохранение...'
+  preloaderSelector: '.form__button-loading',
+  preloaderCaption: 'Сохранение...'
 }
 
 export const access = {
