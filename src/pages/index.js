@@ -40,17 +40,17 @@ function returnCard(item, currentUserId, tpl) {
     },
     setLikes: (data) => {
       if(data.isLiked) {
-        api.likeCard(data)
+        api.unlikeCard(data)
           .then((res) => {
-            card.refreshLikesCounter(res.likes.length);
+            card.likeCard(res.likes);
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
-        api.unlikeCard(data)
+        api.likeCard(data)
           .then((res) => {
-            card.refreshLikesCounter(res.likes.length);
+            card.likeCard(res.likes);
           })
           .catch((err) => {
             console.log(err);
