@@ -36,15 +36,7 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return {
-            card: data.card
-          };
-        }
-
-        return Promise.reject(`Ошибка при удалении карточки: ${result.status}`);
-      });
+      .then(res => this._responseRenderer(res, 'Ошибка при удалении карточки'));
   }
 
   likeCard(data) {

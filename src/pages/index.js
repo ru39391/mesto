@@ -36,13 +36,23 @@ function returnCard(item, currentUserId, tpl) {
       modalPhoto.open(data);
     },
     revealRemoveConfirmation: (data) => {
-      cardRemoveModal.open(data);
+      cardRemoveModal.open();
+      cardRemoveModal.submitForm(() => {
+        api.removeCard(data)
+          .then((res) => {
+            card.removeCardEl();
+            cardRemoveModal.close();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
     },
     setLikes: (data) => {
       if(data.isLiked) {
         api.unlikeCard(data)
           .then((res) => {
-            card.likeCard(res.likes);
+            card.setCardLikes(res.likes);
           })
           .catch((err) => {
             console.log(err);
@@ -50,7 +60,7 @@ function returnCard(item, currentUserId, tpl) {
       } else {
         api.likeCard(data)
           .then((res) => {
-            card.likeCard(res.likes);
+            card.setCardLikes(res.likes);
           })
           .catch((err) => {
             console.log(err);
@@ -58,7 +68,7 @@ function returnCard(item, currentUserId, tpl) {
       }
     }
   }, tpl);
-  return card.createCard();
+  return card.createCardEl();
 }
 
 /* add elements & set user data */
@@ -108,20 +118,8 @@ btns.targetAddCard.addEventListener('click', () => {
   cardFormModal.open();
 });
 
-/* remove card */
-const cardRemoveModal = new PopupWithConfirmation({
-  renderer: (item) => {
-    api.removeCard(item)
-      .then((res) => {
-        res.card.remove();
-        res.card = null;
-        cardRemoveModal.close();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-}, modalConfig.targetRemoveCardSelector);
+/* reveal confirmation */
+const cardRemoveModal = new PopupWithConfirmation(modalConfig.targetRemoveCardSelector);
 cardRemoveModal.setEventListeners();
 
 /* reveal photo */

@@ -26,8 +26,8 @@ export class Card {
 
   _setLikeActiveClass(arr) {
     const usersLikes = [];
-    arr.forEach(likesArrEl => {
-      usersLikes.push(likesArrEl._id);
+    arr.forEach(arrEl => {
+      usersLikes.push(arrEl._id);
     });
     if(usersLikes.indexOf(this._currentOwner) != -1) {
       this._isLiked = true;
@@ -58,19 +58,22 @@ export class Card {
     if(this._owner == this._currentOwner) {
       this._buttonRemove.addEventListener('click', () => {
         this._revealRemoveConfirmation({
-          id: this._id,
-          card: this._card
+          id: this._id
         });
       });
     }
   }
 
-  likeCard(arr) {
+  setCardLikes(arr) {
     this._setLikeActiveClass(arr);
     this._refreshLikesCounter(arr.length);
   }
 
-  createCard() {
+  removeCardEl() {
+    this._removeEl(this._card);
+  }
+
+  createCardEl() {
     this._card = document.querySelector(this._cardSelector).content.querySelector('.photo-wrap').cloneNode(true);
     this._cardPhotoHolder = this._card.querySelector('.photo-wrap__photo-holder');
     this._buttonLike = this._card.querySelector('.photo-wrap__like-button');
@@ -86,7 +89,7 @@ export class Card {
     if(!this._buttonRemove) {
       this._removeEl(this._card.querySelector('.photo-wrap__remove-button'));
     }
-    this.likeCard(this._likes);
+    this.setCardLikes(this._likes);
     this._setEventListeners();
     return this._card;
   }
