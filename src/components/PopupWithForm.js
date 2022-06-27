@@ -5,7 +5,7 @@ import {Popup} from './Popup.js';
 export class PopupWithForm extends Popup {
   constructor({renderer}, popupSelector) {
     super(popupSelector);
-    this._renderer = renderer;
+    this._handleSubmit = renderer;
     this._formEl = this._popup.querySelector(formConfig.defaultSelector);
     this._fieldsArr = Array.from(this._popup.querySelectorAll(formConfig.inputSelector));
     this._btnCaptionEl = this._formEl.querySelector(btnConfig.captionSelector);
@@ -22,7 +22,7 @@ export class PopupWithForm extends Popup {
 
   _submitForm(evt) {
     evt.preventDefault();
-    this._renderer(this._getInputValues());
+    this._handleSubmit(this._getInputValues());
   }
 
   renderLoading(isLoading) {

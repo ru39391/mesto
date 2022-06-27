@@ -4,7 +4,7 @@ export class Api {
     this._headers = options.headers
   }
 
-  _responseRenderer(result, resultAlert) {
+  _checkResponse(result, resultAlert) {
     if (result.ok) {
       return result.json();
     }
@@ -16,7 +16,7 @@ export class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(res => this._responseRenderer(res, 'Ошибка при загрузке карточек'));
+      .then(res => this._checkResponse(res, 'Ошибка при загрузке карточек'));
   }
 
   addCard(data) {
@@ -28,7 +28,7 @@ export class Api {
         link: data.link
       })
     })
-      .then(res => this._responseRenderer(res, 'Ошибка при добавление новой карточки'));
+      .then(res => this._checkResponse(res, 'Ошибка при добавление новой карточки'));
   }
 
   removeCard(data) {
@@ -36,7 +36,7 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => this._responseRenderer(res, 'Ошибка при удалении карточки'));
+      .then(res => this._checkResponse(res, 'Ошибка при удалении карточки'));
   }
 
   likeCard(data) {
@@ -44,7 +44,7 @@ export class Api {
       method: 'PUT',
       headers: this._headers
     })
-      .then(res => this._responseRenderer(res, 'Ошибка при добавлении в избранное'));
+      .then(res => this._checkResponse(res, 'Ошибка при добавлении в избранное'));
   }
 
   unlikeCard(data) {
@@ -52,14 +52,14 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => this._responseRenderer(res, 'Ошибка при удалении из избранного'));
+      .then(res => this._checkResponse(res, 'Ошибка при удалении из избранного'));
   }
 
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then(res => this._responseRenderer(res, 'Ошибка при получении данных пользователя'));
+      .then(res => this._checkResponse(res, 'Ошибка при получении данных пользователя'));
   }
 
   setUserData(data) {
@@ -71,7 +71,7 @@ export class Api {
         about: data.about
       })
     })
-      .then(res => this._responseRenderer(res, 'Ошибка при обновлении данных пользователя'));
+      .then(res => this._checkResponse(res, 'Ошибка при обновлении данных пользователя'));
   }
 
   setUserPic(data) {
@@ -82,6 +82,6 @@ export class Api {
         avatar: data.link
       })
     })
-      .then(res => this._responseRenderer(res, 'Ошибка при обновлении изображения пользователя'));
+      .then(res => this._checkResponse(res, 'Ошибка при обновлении изображения пользователя'));
   }
 }

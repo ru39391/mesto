@@ -7,15 +7,15 @@ export class PopupWithConfirmation extends Popup {
     this._formEl = this._popup.querySelector(formConfig.defaultSelector);
   }
 
-  submitForm(renderer) {
-    this._formRenderer = renderer;
+  submitForm(handler) {
+    this._handleSubmit = handler;
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._formEl.addEventListener('submit', e => {
       e.preventDefault();
-      this._formRenderer();
+      this._handleSubmit();
     });
   }
 }
